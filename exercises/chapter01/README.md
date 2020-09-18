@@ -27,7 +27,7 @@ URL: https://github.com/NU-CSYE6530-Fall2020/constrained-device-app-MyronForNEU/
 NOTE: Include one or more UML designs representing your solution. It's expected each
 diagram you provide will look similar to, but not the same as, its counterpart in the
 book [Programming the IoT](https://learning.oreilly.com/library/view/programming-the-internet/9781492081401/).
-![Alt text]()
+![CDA_UML](https://github.com/NU-CSYE6530-Fall2020/constrained-device-app-MyronForNEU/blob/chapter01/exercises/chapter01/CDA_UML.jpg)
 
 ### Unit Tests Executed
 
