@@ -7,7 +7,11 @@
 # and designed to be modified by the student as needed.
 #
 
+import logging
+
 from programmingtheiot.data.SensorData import SensorData
+
+logging.basicConfig(format = '%(asctime)s:%(name)s:%(levelname)s:%(message)s', level = logging.DEBUG)
 
 class BaseSystemUtilTask():
 	"""
@@ -30,7 +34,9 @@ class BaseSystemUtilTask():
 		pass
 		
 	def getTelemetryValue(self) -> float:
-		pass
+		val = self._getSystemUtil()
+		logging.info('The subclass <' + self.__class__.__name__ + '> get a value: ' + str(val))
+		return val
 	
 	def _getSystemUtil(self) -> float:
 		"""
