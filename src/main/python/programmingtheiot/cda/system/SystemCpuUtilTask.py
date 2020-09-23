@@ -22,5 +22,8 @@ class SystemCpuUtilTask(BaseSystemUtilTask):
 		super(SystemCpuUtilTask, self).__init__()
 	
 	def _getSystemUtil(self) -> float:
+		"""
+		Get CPU utilization and return it
+		"""
 		return psutil.cpu_percent()
 		

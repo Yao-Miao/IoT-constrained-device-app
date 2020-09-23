@@ -24,6 +24,11 @@ class SystemPerformanceManager(object):
 
 
 	def __init__(self, pollRate: int = 60):
+		"""
+		Create an instance of SystemCpuUtilTask
+		Create an instance of SystemMemUtilTask
+		Add a job to the scheduler
+		"""
 		self.cpuUtilTask = SystemCpuUtilTask()
 		self.memUtilTask = SystemMemUtilTask()
 		self.scheduler = BackgroundScheduler()
@@ -31,6 +36,11 @@ class SystemPerformanceManager(object):
 									
 
 	def handleTelemetry(self):
+		"""
+		Call getTelemetryValue() method to get the CPU utilization and memory utilization. 
+		Logs the values of self.cpuUtilPct and self.memUtilPct
+		
+		"""
 		self.cpuUtilPct = self.cpuUtilTask.getTelemetryValue()
 		self.memUtilPct = self.memUtilTask.getTelemetryValue()
 		
@@ -40,7 +50,17 @@ class SystemPerformanceManager(object):
 		pass
 	
 	def startManager(self):
+		"""
+		Start the System Performance Manager. Call scheduler.start() method to start the job scheduler
+		
+		"""
 		logging.info("---> Started SystemPerformanceManager.")
+		self.scheduler.start()
 		
 	def stopManager(self):
+		"""
+		Stop the System Performance Manager. Call scheduler.shutdown() method to shutdown the job scheduler
+		
+		"""
+		self.scheduler.shutdown()
 		logging.info("---> Stopped SystemPerformanceManager.")
