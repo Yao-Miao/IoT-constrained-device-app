@@ -6,8 +6,6 @@ Be sure to implement all the PIOT-CDA-* issues (requirements) listed at [PIOT-IN
 
 ### Description
 
-NOTE: Include two full paragraphs describing your implementation approach by answering the questions listed below.
-
 What does your implementation do? 
 
 Implement the Constrained Device App (CDA) in Python. Build an IoT performance monitoring applications to collect some simple telemetry about the constrained devices. In this exercise, the application will read and report on basic systems performance parameters, such as CPU utilization and memory utilization.
