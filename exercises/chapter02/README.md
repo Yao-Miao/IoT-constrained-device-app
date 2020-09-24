@@ -21,9 +21,8 @@ How does your implementation work?
 
 ### Code Repository and Branch
 
-NOTE: Be sure to include the branch (e.g. https://github.com/programming-the-iot/python-components/tree/alpha001).
-
-URL: 
+Chapter02 Branch URL: https://github.com/NU-CSYE6530-Fall2020/constrained-device-app-MyronForNEU/tree/chapter02
+Main Branch URL: https://github.com/NU-CSYE6530-Fall2020/constrained-device-app-MyronForNEU/tree/alpha001
 
 ### UML Design Diagram(s)
 
