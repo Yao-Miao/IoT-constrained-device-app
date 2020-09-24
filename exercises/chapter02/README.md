@@ -22,6 +22,7 @@ How does your implementation work?
 ### Code Repository and Branch
 
 Chapter02 Branch URL: https://github.com/NU-CSYE6530-Fall2020/constrained-device-app-MyronForNEU/tree/chapter02
+
 Main Branch URL: https://github.com/NU-CSYE6530-Fall2020/constrained-device-app-MyronForNEU/tree/alpha001
 
 ### UML Design Diagram(s)
