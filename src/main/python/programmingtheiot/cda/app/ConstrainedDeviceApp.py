@@ -27,6 +27,7 @@ class ConstrainedDeviceApp():
 	def __init__(self):
 		"""
 		Initialization of class.
+		Create an instance of SystemPerformanceManager
 		
 		@param path The name of the resource to apply to the URI.
 		"""
