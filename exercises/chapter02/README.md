@@ -40,7 +40,5 @@ Main Branch URL: https://github.com/NU-CSYE6530-Fall2020/constrained-device-app-
 
 - ConstrainedDeviceAppTest
 - SystemPerformanceManagerTest
-- ConstrainedDeviceAppTest
-- SystemPerformanceManagerTest
 
 EOF.
