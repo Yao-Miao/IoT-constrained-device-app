@@ -33,11 +33,14 @@ class ActuatorData(BaseIotData):
 		
 		# The private member
 		# add by Yao Miao
-		self.actuatorType = actuatorType
+		self.__actuatorType = actuatorType
 		self.__command = self.DEFAULT_COMMAND
 		self.__stateData = ""
 		self.__value = 0.0
 		self.__responseFlag = False
+		
+	def getActuatorType(self):
+		return self.__actuatorType	
 	
 	def getCommand(self) -> int:
 		return self.__command

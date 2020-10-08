@@ -56,7 +56,6 @@ class BaseSensorSimTask():
 	def getTelemetryValue(self) -> float:
 		if self.__latestSd:
 			value = self.__latestSd.getValue()
-			self.__latestSd = self.generateTelemetry()
 			return value
 		else:
 			sd = self.generateTelemetry()

@@ -24,20 +24,30 @@ class BaseActuatorSimTask():
 		self.__latestAd = ActuatorData()
 		
 	def activateActuator(self, val: float) -> bool:
-		logging.info("---> The Actuator just send an \"ON\" Command, the value is " + str(val))
+		logging.info("---> Emulating %s actuator ON:", str(self.getActuatorTypeName()))
+		print('*******')
+		print('* O N *')
+		print('*******')
+		print(self.getActuatorTypeName() + ' VALUE -> ' + str(val))
 		self.__latestAd.setCommand(ActuatorData.COMMAND_ON)
 		return True
 		
 	def deactivateActuator(self) -> bool:
-		logging.info("---> The Actuator just send an \"OFF\" Command. ")
+		logging.info("---> Emulating %s actuator OFF: ", str(self.getActuatorTypeName()))
+		print('*******')
+		print('* OFF *') 
+		print('*******')
 		self.__latestAd.setCommand(ActuatorData.COMMAND_OFF)
 		return True
-		
+	
+	def getActuatorType(self):
+		return self.__actuatorType
+	
 	def getLatestActuatorResponse(self) -> ActuatorData:
 		return self.__latestAd
 	
 	def getSimpleName(self) -> str:
-		pass
+		return self.__simpleName
 	
 	def updateActuator(self, data: ActuatorData) -> bool:
 		if data:
@@ -49,5 +59,12 @@ class BaseActuatorSimTask():
 		
 		self.__latestAd.setAsResponse()
 		return True
+	
+	def getActuatorTypeName(self):
+		if self.__actuatorType == 1:
+			return 'HVAC'
+		if self.__actuatorType == 2:
+			return 'HUMIDIFIER'
+		return 'Unknown'
 		
 		

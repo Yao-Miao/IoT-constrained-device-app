@@ -40,10 +40,12 @@ class ActuatorAdapterManager(object):
 			self.dataMsgListener.handleActuatorCommandResponse(data)
 			logging.info('Actuator command received. Processing...')
 			if ~self.useEmulator:
-				if (data.actuatorType == ActuatorData.HUMIDIFIER_ACTUATOR_TYPE):
-					if ~data.isResponseFlagEnabled(): self.humidifierActuator.updateActuator(data)
-				if (data.actuatorType == ActuatorData.HVAC_ACTUATOR_TYPE):
-					if ~data.isResponseFlagEnabled(): self.hvacActuator.updateActuator(data)
+				if (data.getActuatorType() == ActuatorData.HUMIDIFIER_ACTUATOR_TYPE):
+					if ~data.isResponseFlagEnabled(): 
+						self.humidifierActuator.updateActuator(data)
+				if (data.getActuatorType() == ActuatorData.HVAC_ACTUATOR_TYPE):
+					if ~data.isResponseFlagEnabled(): 
+						self.hvacActuator.updateActuator(data)
 			
 	
 	def setDataMessageListener(self, listener: IDataMessageListener) -> bool:

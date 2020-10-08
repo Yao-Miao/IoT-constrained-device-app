@@ -29,12 +29,6 @@ class DefaultDataMessageListener(IDataMessageListener):
 		@return bool True on success; False otherwise.
 		"""
 		if data:
-			print('*******')
-			if data.getCommand() == 1:
-				print('* O N *')
-			else:
-				print('* OFF *') 
-			print('*******')
 			#logging.info('')
 			logging.info('Actuator Command: ' + str(data.getCommand()))
 			

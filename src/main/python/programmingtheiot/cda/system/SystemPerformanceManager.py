@@ -23,7 +23,7 @@ class SystemPerformanceManager(object):
 	"""
 
 
-	def __init__(self, pollRate: int = 60):
+	def __init__(self, pollRate: int = 10):
 		"""
 		Create an instance of SystemCpuUtilTask
 		Create an instance of SystemMemUtilTask

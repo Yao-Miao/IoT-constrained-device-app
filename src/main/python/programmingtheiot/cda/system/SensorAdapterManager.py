@@ -65,16 +65,24 @@ class SensorAdapterManager(object):
 		self.temperatureSensorSimTask = TemperatureSensorSimTask(dataSet= tempData)
 
 	def handleTelemetry(self):
-		humidityVal = self.humiditySensorSimTask.getTelemetryValue()
-		pressureVal = self.pressureSensorSimTask.getTelemetryValue()
-		tempVal = self.temperatureSensorSimTask .getTelemetryValue()
+		#humidityVal = self.humiditySensorSimTask.getTelemetryValue()
+		#pressureVal = self.pressureSensorSimTask.getTelemetryValue()
+		#tempVal = self.temperatureSensorSimTask .getTelemetryValue()
+		
+		humiditySd = self.humiditySensorSimTask.generateTelemetry()
+		pressureSd = self.pressureSensorSimTask.generateTelemetry()
+		tempSd = self.temperatureSensorSimTask .generateTelemetry()
+		
 		if self.dataMsgListener :
-			self.dataMsgListener.handleSensorMessage(humidityVal)
-			self.dataMsgListener.handleSensorMessage(pressureVal)
-			self.dataMsgListener.handleSensorMessage(tempVal)
+			#self.dataMsgListener.handleSensorMessage(humidityVal)
+			#self.dataMsgListener.handleSensorMessage(pressureVal)
+			#self.dataMsgListener.handleSensorMessage(tempVal)
+			self.dataMsgListener.handleSensorMessage(humiditySd)
+			self.dataMsgListener.handleSensorMessage(pressureSd)
+			self.dataMsgListener.handleSensorMessage(tempSd)
 		
 		
-		logging.info(' >>>>>>>>> Humidity is < %s >,  Pressure is < %s >,  Temperature is < %s >.', str(humidityVal), str(pressureVal), str(tempVal))
+		logging.info(' >>>>>>>>> Humidity is < %s >,  Pressure is < %s >,  Temperature is < %s >.', str(humiditySd.getValue()), str(pressureSd.getValue()), str(tempSd.getValue()))
 		
 	def setDataMessageListener(self, listener: IDataMessageListener) -> bool:
 		if listener:

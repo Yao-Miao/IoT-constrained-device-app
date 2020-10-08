@@ -81,8 +81,9 @@ class DeviceDataManager(IDataMessageListener):
 		self.sensorAdapterManager.startManager()
 		
 	def stopManager(self):
-		self.sensorAdapterManager.stopManager()
 		self.sysPerfManager.stopManager()
+		self.sensorAdapterManager.stopManager()
+		
 		logging.info("----->>>The DeviceDataManager stopped")
 		
 		
