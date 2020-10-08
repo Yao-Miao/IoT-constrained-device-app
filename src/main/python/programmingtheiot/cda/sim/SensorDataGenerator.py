@@ -294,8 +294,8 @@ class SensorDataGenerator(object):
 		
 		self.plotter.plot(dataSet.getTimeEntries(), dataSet.getDataEntries())
 		self.plotter.title(chartTitle)
-		self.plotter.ylabel(chartXLabel)
-		self.plotter.xlabel(chartYLabel)
+		self.plotter.ylabel(chartYLabel)
+		self.plotter.xlabel(chartXLabel)
 		self.plotter.grid(True, which = 'both')
 		self.plotter.show()
 		
@@ -450,15 +450,15 @@ def main():
 	
 	# run indoor temp example - 1 minute samples over 24 hours - start time will be this system's current time
 	sensorDataSet = sensorDataGenerator.generateDailyIndoorTemperatureDataSet(noiseLevel = 15, minValue = SensorDataGenerator.LOW_NORMAL_INDOOR_TEMP, maxValue = SensorDataGenerator.HI_NORMAL_INDOOR_TEMP)
-	sensorDataGenerator.generateOnScreenGraph(chartTitle = "Indoor Temp", chartYLabel = "Time", chartXLabel = "Temp (C)", dataSet = sensorDataSet)
+	sensorDataGenerator.generateOnScreenGraph(chartTitle = "Indoor Temp", chartXLabel = "Hour", chartYLabel = "Temp (C)", dataSet = sensorDataSet)
 	
 	# run humidity example - 1 minute samples over 24 hours - start time will be this system's current time
 	sensorDataSet = sensorDataGenerator.generateDailyEnvironmentHumidityDataSet(noiseLevel = 10, minValue = SensorDataGenerator.LOW_NORMAL_ENV_HUMIDITY, maxValue = SensorDataGenerator.HI_NORMAL_ENV_HUMIDITY)
-	sensorDataGenerator.generateOnScreenGraph(chartTitle = "Humidity", chartYLabel = "Time", chartXLabel = "%", dataSet = sensorDataSet)
+	sensorDataGenerator.generateOnScreenGraph(chartTitle = "Humidity", chartXLabel = "Hour", chartYLabel = "Relative %", dataSet = sensorDataSet)
 	
 	# run pressure example - 1 minute samples over 24 hours - start time will be this system's current time
 	sensorDataSet = sensorDataGenerator.generateDailyEnvironmentPressureDataSet(noiseLevel = 1, minValue = SensorDataGenerator.LOW_NORMAL_ENV_PRESSURE, maxValue = SensorDataGenerator.HI_NORMAL_ENV_PRESSURE)
-	sensorDataGenerator.generateOnScreenGraph(chartTitle = "Pressure", chartXLabel = "Time", chartYLabel = "Millibars", dataSet = sensorDataSet)
+	sensorDataGenerator.generateOnScreenGraph(chartTitle = "Pressure", chartXLabel = "Hour", chartYLabel = "Millibars", dataSet = sensorDataSet)
 	
 if __name__ == '__main__':
 	"""

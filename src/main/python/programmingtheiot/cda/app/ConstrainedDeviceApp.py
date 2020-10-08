@@ -32,8 +32,7 @@ class ConstrainedDeviceApp():
 		@param path The name of the resource to apply to the URI.
 		"""
 		logging.info("Initializing CDA...")
-		self.sysPerfManager = SystemPerformanceManager()
-		self.devDataManager = DeviceDataManager()
+		self.devDataMgr= DeviceDataManager()
 
 	def startApp(self):
 		"""
@@ -41,8 +40,7 @@ class ConstrainedDeviceApp():
 		
 		"""
 		logging.info("---> Starting CDA...")
-		self.sysPerfManager.startManager()
-		self.devDataManager.startManager()
+		self.devDataMgr.startManager()
 		logging.info("---> CDA started.")
 
 	def stopApp(self, code: int):
@@ -51,8 +49,7 @@ class ConstrainedDeviceApp():
 		
 		"""
 		logging.info("---> CDA stopping...")
-		self.sysPerfManager.stopManager()
-		self.devDataManager.stopManager()
+		self.devDataMgr.stopManager()
 		logging.info("---> CDA stopped with exit code %s.", str(code))
 		
 	def parseArgs(self, args):

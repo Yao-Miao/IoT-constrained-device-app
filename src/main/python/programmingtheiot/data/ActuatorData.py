@@ -25,35 +25,48 @@ class ActuatorData(BaseIotData):
 	HVAC_ACTUATOR_TYPE = 1
 	HUMIDIFIER_ACTUATOR_TYPE = 2
 	LED_DISPLAY_ACTUATOR_TYPE = 100
+	
+
 
 	def __init__(self, actuatorType = DEFAULT_ACTUATOR_TYPE, d = None):
 		super(ActuatorData, self).__init__(d = d)
-		pass
+		
+		# The private member
+		# add by Yao Miao
+		self.actuatorType = actuatorType
+		self.__command = self.DEFAULT_COMMAND
+		self.__stateData = ""
+		self.__value = 0.0
+		self.__responseFlag = False
 	
 	def getCommand(self) -> int:
-		pass
+		return self.__command
 	
 	def getStateData(self) -> str:
-		pass
+		return self.__stateData
 	
 	def getValue(self) -> float:
-		pass
+		return self.__value
 	
 	def isResponseFlagEnabled(self) -> bool:
-		return False
+		#return False
+		return self.__responseFlag
 	
 	def setCommand(self, command: int):
-		pass
+		self.__command = command
 	
 	def setAsResponse(self):
-		pass
+		self.__responseFlag = True
 		
 	def setStateData(self, stateData: str):
-		pass
+		self.__stateData = stateData
 	
 	def setValue(self, val: float):
-		pass
+		self.__value = val
 		
 	def _handleUpdateData(self, data):
-		pass
+		self.__command = data.__command
+		self.__stateData = data.__stateData
+		self.__value = data.__value
+		
 		

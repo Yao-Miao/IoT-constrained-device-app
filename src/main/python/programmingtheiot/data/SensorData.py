@@ -22,10 +22,15 @@ class SensorData(BaseIotData):
 	HUMIDITY_SENSOR_TYPE = 1
 	PRESSURE_SENSOR_TYPE = 2
 	TEMP_SENSOR_TYPE = 3
+	
 		
-	def __init__(self, sensorType = DEFAULT_SENSOR_TYPE, d = None):
+	def __init__(self, sensorType = DEFAULT_SENSOR_TYPE, value = DEFAULT_VAL, d = None):
 		super(SensorData, self).__init__(d = d)
-		pass
+		
+		# initial the __value
+		# The private member __value: record the current value that gets from sensor 
+		# add by Yao Miao
+		self.__value = value;
 	
 	def getSensorType(self) -> int:
 		"""
@@ -36,10 +41,10 @@ class SensorData(BaseIotData):
 		return self.sensorType
 	
 	def getValue(self) -> float:
-		pass
+		return self.__value
 	
 	def setValue(self, newVal: float):
-		pass
+		self.__value = newVal
 		
 	def _handleUpdateData(self, data):
-		pass
+		self.__value = data.__value

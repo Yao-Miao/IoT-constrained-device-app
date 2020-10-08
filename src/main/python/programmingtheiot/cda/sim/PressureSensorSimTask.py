@@ -20,12 +20,12 @@ class PressureSensorSimTask(BaseSensorSimTask):
 	
 	"""
 
-	def __init__(self):
-		pass
+	def __init__(self, dataSet = []):
+		super(PressureSensorSimTask, self).__init__(SensorData.PRESSURE_SENSOR_TYPE, dataSet = dataSet, minVal = SensorDataGenerator.LOW_NORMAL_ENV_PRESSURE, maxVal = SensorDataGenerator.HI_NORMAL_ENV_PRESSURE)
 	
 	def generateTelemetry(self) -> SensorData:
-		pass
+		return super().generateTelemetry()
 	
 	def getTelemetryValue(self) -> float:
-		pass
+		return super().getTelemetryValue()
 	
