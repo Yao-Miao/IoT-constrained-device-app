@@ -6,17 +6,28 @@ Be sure to implement all the PIOT-CDA-* issues (requirements) listed at [PIOT-IN
 
 ### Description
 
-NOTE: Include two full paragraphs describing your implementation approach by answering the questions listed below.
-
 What does your implementation do? 
+
+Add a simulation and data generation capability to The Edge Tier. Add simulated sensing and actuation to the Constrained Device App (CDA) using a data generator for humidity, pressure, and temperature. Use the generator to create data sets that can then package as telemetry objects containing additional information about the device. Create a simple threshold trigger to issue a simulated actuator command.
 
 How does your implementation work?
 
+1.	Create (or edit the exiting) Python modules that will contain the sensor and actuator data: SensorData, ActuatorData, and SystemPerformanceData. 
+2.	Create and implement the BaseSensorSimTask module.
+3.	Create the new Python modules that will implement the sensor simulator tasks: HumiditySensorSimTask, PressureSensorSimTask, TemperatureSensorSimTask.
+4.	Create the BaseActuatorSimTask
+5.	Create the new Python modules that will implement the actuator simulator tasks: HumidifierActuatorSimTask, HvacActuatorSimTask
+6.	Create a new  Python module named SensorAdapterManager with class name SensorAdapterManager
+7.	Create a new / edit the existing Python module named ActuatorAdapterManager with class name ActuatorAdapterManager.
+8.	Create a new Python module named DeviceDataManager with class name DeviceDataManager.
+9.	Create an instance of DeviceDataManager within ConstrainedDeviceApp and invoke the manager's start / stop methods within the app's start / stop methods.
+
+
 ### Code Repository and Branch
 
-NOTE: Be sure to include the branch (e.g. https://github.com/programming-the-iot/python-components/tree/alpha001).
+Chapter03 Branch URL: https://github.com/NU-CSYE6530-Fall2020/constrained-device-app-MyronForNEU/tree/chapter03
 
-URL: 
+Main Branch URL: https://github.com/NU-CSYE6530-Fall2020/constrained-device-app-MyronForNEU/tree/alpha001
 
 ### UML Design Diagram(s)
 
@@ -27,23 +38,22 @@ book [Programming the IoT](https://learning.oreilly.com/library/view/programming
 
 ### Unit Tests Executed
 
-NOTE: TA's will execute your unit tests. You only need to list each test case below
-(e.g. ConfigUtilTest, DataUtilTest, etc). Be sure to include all previous tests, too,
-since you need to ensure you haven't introduced regressions.
+ActuatorDataTest
+SensorDataTest
+SystemPerformanceDataTest
 
-- 
-- 
-- 
+HumiditySensorSimTaskTest
+PressureSensorSimTaskTest
+TemperatureSensorSimTaskTest
+
+HumidifierActuatorSimTaskTest
+HvacActuatorSimTaskTest
+
 
 ### Integration Tests Executed
 
-NOTE: TA's will execute most of your integration tests using their own environment, with
-some exceptions (such as your cloud connectivity tests). In such cases, they'll review
-your code to ensure it's correct. As for the tests you execute, you only need to list each
-test case below (e.g. SensorSimAdapterManagerTest, DeviceDataManagerTest, etc.)
-
-- 
-- 
-- 
+SensorAdapterManagerTest
+ActuatorAdapterManagerTest
+DeviceDataManagerNoCommsTest
 
 EOF.
