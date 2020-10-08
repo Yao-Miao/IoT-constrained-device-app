@@ -38,22 +38,22 @@ book [Programming the IoT](https://learning.oreilly.com/library/view/programming
 
 ### Unit Tests Executed
 
-ActuatorDataTest
-SensorDataTest
-SystemPerformanceDataTest
+- ActuatorDataTest
+- SensorDataTest
+- SystemPerformanceDataTest
 
-HumiditySensorSimTaskTest
-PressureSensorSimTaskTest
-TemperatureSensorSimTaskTest
+- HumiditySensorSimTaskTest
+- PressureSensorSimTaskTest
+- TemperatureSensorSimTaskTest
 
-HumidifierActuatorSimTaskTest
-HvacActuatorSimTaskTest
+- HumidifierActuatorSimTaskTest
+- HvacActuatorSimTaskTest
 
 
 ### Integration Tests Executed
 
-SensorAdapterManagerTest
-ActuatorAdapterManagerTest
-DeviceDataManagerNoCommsTest
+- SensorAdapterManagerTest
+- ActuatorAdapterManagerTest
+- DeviceDataManagerNoCommsTest
 
 EOF.
