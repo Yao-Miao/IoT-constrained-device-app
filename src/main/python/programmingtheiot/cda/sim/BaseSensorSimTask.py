@@ -22,6 +22,10 @@ class BaseSensorSimTask():
 	DEFAULT_MAX_VAL = 1000.0
 	
 	def __init__(self, sensorType: int = SensorData.DEFAULT_SENSOR_TYPE, dataSet = None, minVal: float = DEFAULT_MIN_VAL, maxVal: float = DEFAULT_MAX_VAL):
+		"""
+		Initialization of class.
+		Create an instance of BaseSensorSimTask
+		"""
 		self.__sensorType = sensorType
 		self.__minVal = minVal
 		self.__maxVal = maxVal
@@ -36,8 +40,12 @@ class BaseSensorSimTask():
 			self.__dataSet = None
 			self.__useRandomizer = True
 		
-	
 	def generateTelemetry(self) -> SensorData:
+		"""
+		Generate the Telemetry
+		
+		@return SensorData
+		"""
 		sd = SensorData(sensorType = self.__sensorType)
 		
 		if self.__useRandomizer:
@@ -54,6 +62,11 @@ class BaseSensorSimTask():
 		
 	
 	def getTelemetryValue(self) -> float:
+		"""
+		Generate the value of the last Telemetry
+		
+		@return float
+		"""
 		if self.__latestSd:
 			value = self.__latestSd.getValue()
 			return value

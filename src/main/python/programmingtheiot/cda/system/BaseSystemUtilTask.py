@@ -34,6 +34,11 @@ class BaseSystemUtilTask():
 		pass
 		
 	def getTelemetryValue(self) -> float:
+		"""
+		Generate the value of the Telemetry
+		
+		@return float
+		"""
 		val = self._getSystemUtil()
 		logging.info('The subclass <' + self.__class__.__name__ + '> get a value: ' + str(val))
 		return val

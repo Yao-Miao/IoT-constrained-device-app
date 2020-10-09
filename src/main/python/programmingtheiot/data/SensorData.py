@@ -25,6 +25,10 @@ class SensorData(BaseIotData):
 	
 		
 	def __init__(self, sensorType = DEFAULT_SENSOR_TYPE, value = DEFAULT_VAL, d = None):
+		"""
+		Initialization of class.
+		Create an instance of SensorData
+		"""
 		super(SensorData, self).__init__(d = d)
 		
 		# initial the __value
@@ -41,10 +45,23 @@ class SensorData(BaseIotData):
 		return self.sensorType
 	
 	def getValue(self) -> float:
+		"""
+		Get the Value of the instance
+		
+		@return float
+		"""
 		return self.__value
 	
 	def setValue(self, newVal: float):
+		"""
+		Set the Value of the instance
+		
+		@return float
+		"""
 		self.__value = newVal
 		
 	def _handleUpdateData(self, data):
+		"""
+		update the instance
+		"""
 		self.__value = data.__value

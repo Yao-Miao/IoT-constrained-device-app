@@ -19,6 +19,10 @@ class SystemCpuUtilTask(BaseSystemUtilTask):
 	"""
 
 	def __init__(self):
+		"""
+		Initialization of class.
+		Create an instance of SystemCpuUtilTask
+		"""
 		super(SystemCpuUtilTask, self).__init__()
 	
 	def _getSystemUtil(self) -> float:

@@ -29,6 +29,10 @@ class SensorAdapterManager(object):
 	"""
 
 	def __init__(self, useEmulator: bool = False, pollRate: int = 5, allowConfigOverride: bool = True):
+		"""
+		Initialization of class.
+		Create an instance of SensorAdapterManager
+		"""
 		self.useEmulator = useEmulator
 		self.pollRate = pollRate
 		self.allowConfigOverride = allowConfigOverride
@@ -65,6 +69,9 @@ class SensorAdapterManager(object):
 		self.temperatureSensorSimTask = TemperatureSensorSimTask(dataSet= tempData)
 
 	def handleTelemetry(self):
+		"""
+		handle the Telemetry
+		"""
 		#humidityVal = self.humiditySensorSimTask.getTelemetryValue()
 		#pressureVal = self.pressureSensorSimTask.getTelemetryValue()
 		#tempVal = self.temperatureSensorSimTask .getTelemetryValue()
@@ -85,14 +92,27 @@ class SensorAdapterManager(object):
 		logging.info(' >>>>>>>>> Humidity is < %s >,  Pressure is < %s >,  Temperature is < %s >.', str(humiditySd.getValue()), str(pressureSd.getValue()), str(tempSd.getValue()))
 		
 	def setDataMessageListener(self, listener: IDataMessageListener) -> bool:
+		"""
+		set Data MessageListener which is used for monitor the Sensor
+		
+		@return bool
+		"""
 		if listener:
 			self.dataMsgListener = listener
 			
 	
 	def startManager(self):
+		"""
+		Start the SensorAdapterManager. 
+		
+		"""
 		logging.info("---> Started SensorAdapterManager.")
 		self.scheduler.start()
 		
 	def stopManager(self):
+		"""
+		Stop the SensorAdapterManager. 
+		
+		"""
 		self.scheduler.shutdown()
 		logging.info("---> Stopped SensorAdapterManager.")

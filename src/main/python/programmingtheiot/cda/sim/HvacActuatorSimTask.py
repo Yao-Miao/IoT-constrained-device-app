@@ -20,14 +20,33 @@ class HvacActuatorSimTask(BaseActuatorSimTask):
 	"""
 
 	def __init__(self):
+		"""
+		Initialization of class.
+		Create an instance of HvacActuatorSimTask
+		"""
 		super(HvacActuatorSimTask, self).__init__(actuatorType = ActuatorData.HVAC_ACTUATOR_TYPE, simpleName = "HVAC")
 		
 	def activateActuator(self, val: float) -> bool:
+		"""
+		Activate the Actuator
+		
+		@return bool
+		"""
 		return super().activateActuator(val)
 		
 	def deactivateActuator(self) -> bool:
+		"""
+		Deactivate the Actuator
+		
+		@return bool
+		"""
 		return super().deactivateActuator()
 		
 	def updateActuator(self, data: ActuatorData) -> ActuatorData:
+		"""
+		Update the Actuator
+		
+		@return ActuatorData
+		"""
 		super().updateActuator(data)
 		return data

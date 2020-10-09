@@ -19,11 +19,20 @@ class BaseActuatorSimTask():
 	"""
 
 	def __init__(self, actuatorType: int = ActuatorData.DEFAULT_ACTUATOR_TYPE, simpleName: str = "Actuator"):
+		"""
+		Initialization of class.
+		Create an instance of BaseActuatorSimTask
+		"""
 		self.__actuatorType = actuatorType
 		self.__simpleName = simpleName
 		self.__latestAd = ActuatorData()
 		
 	def activateActuator(self, val: float) -> bool:
+		"""
+		Activate the Actuator
+		
+		@return bool
+		"""
 		logging.info("---> Emulating %s actuator ON:", str(self.getActuatorTypeName()))
 		print('*******')
 		print('* O N *')
@@ -33,6 +42,11 @@ class BaseActuatorSimTask():
 		return True
 		
 	def deactivateActuator(self) -> bool:
+		"""
+		Deactivate the Actuator
+		
+		@return bool
+		"""
 		logging.info("---> Emulating %s actuator OFF: ", str(self.getActuatorTypeName()))
 		print('*******')
 		print('* OFF *') 
@@ -41,15 +55,35 @@ class BaseActuatorSimTask():
 		return True
 	
 	def getActuatorType(self):
+		"""
+		Get the ActuatorType of the instance
+		
+		@return str
+		"""
 		return self.__actuatorType
 	
 	def getLatestActuatorResponse(self) -> ActuatorData:
+		"""
+		Get the LatestActuatorResponse of the instance
+		
+		@return ActuatorData
+		"""
 		return self.__latestAd
 	
 	def getSimpleName(self) -> str:
+		"""
+		Get the SimpleName of the instance
+		
+		@return str
+		"""
 		return self.__simpleName
 	
 	def updateActuator(self, data: ActuatorData) -> bool:
+		"""
+		Update the Actuator
+		
+		@return bool
+		"""
 		if data:
 			if data.getCommand() == ActuatorData.COMMAND_ON :
 				self.activateActuator(data.getValue())
@@ -61,6 +95,11 @@ class BaseActuatorSimTask():
 		return True
 	
 	def getActuatorTypeName(self):
+		"""
+		Get the ActuatorTypeName of the instance
+		
+		@return str
+		"""
 		if self.__actuatorType == 1:
 			return 'HVAC'
 		if self.__actuatorType == 2:

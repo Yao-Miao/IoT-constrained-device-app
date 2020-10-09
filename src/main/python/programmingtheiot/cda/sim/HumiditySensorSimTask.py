@@ -21,11 +21,25 @@ class HumiditySensorSimTask(BaseSensorSimTask):
 	"""
 
 	def __init__(self, dataSet = []):
+		"""
+		Initialization of class.
+		Create an instance of HumiditySensorSimTask
+		"""
 		super(HumiditySensorSimTask, self).__init__(SensorData.HUMIDITY_SENSOR_TYPE, dataSet = dataSet, minVal = SensorDataGenerator.LOW_NORMAL_ENV_HUMIDITY, maxVal = SensorDataGenerator.HI_NORMAL_ENV_HUMIDITY)
 	
 	def generateTelemetry(self) -> SensorData:
+		"""
+		Generate the Telemetry
+		
+		@return SensorData
+		"""
 		return super().generateTelemetry()
 	
 	def getTelemetryValue(self) -> float:
+		"""
+		Generate the value of the Telemetry
+		
+		@return float
+		"""
 		return super().getTelemetryValue()
 	

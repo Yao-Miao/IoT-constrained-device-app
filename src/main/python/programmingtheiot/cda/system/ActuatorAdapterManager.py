@@ -23,6 +23,10 @@ class ActuatorAdapterManager(object):
 	"""
 	
 	def __init__(self, useEmulator: bool = False):
+		"""
+		Initialization of class.
+		Create an instance of ActuatorAdapterManager
+		"""
 		self.useEmulator = useEmulator
 		self.dataMsgListener = None
 		if self.useEmulator :
@@ -36,6 +40,11 @@ class ActuatorAdapterManager(object):
 			
 
 	def sendActuatorCommand(self, data: ActuatorData) -> bool:
+		"""
+		Send Actuator Command to Actuator
+		
+		@return bool
+		"""
 		if self.dataMsgListener :
 			self.dataMsgListener.handleActuatorCommandResponse(data)
 			logging.info('Actuator command received. Processing...')
@@ -49,5 +58,10 @@ class ActuatorAdapterManager(object):
 			
 	
 	def setDataMessageListener(self, listener: IDataMessageListener) -> bool:
+		"""
+		set Data MessageListener which is used for monitor the Actuator excuate
+		
+		@return bool
+		"""
 		if listener:
 			self.dataMsgListener = listener

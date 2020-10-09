@@ -35,6 +35,10 @@ class DeviceDataManager(IDataMessageListener):
 	"""
 	
 	def __init__(self, enableMqtt: bool = True, enableCoap: bool = False):
+		"""
+		Initialization of class.
+		Create an instance of DeviceDataManager
+		"""
 		
 		self.configUtil = ConfigUtil()
 		
@@ -52,18 +56,33 @@ class DeviceDataManager(IDataMessageListener):
 		
 			
 	def handleActuatorCommandResponse(self, data: ActuatorData) -> bool:
+		"""
+		handle the ActuatorCommandResponse
+		
+		@return bool
+		"""
 		logging.info("----->>>The handleActuatorCommandResponse method is being called")
 		# Use the DataUtil class to convert the ActuatorData to JSON.
 		adJson= DataUtil.actuatorDataToJson(self, data)
 		self._handleUpstreamTransmission(ResourceNameEnum.CDA_ACTUATOR_RESPONSE_RESOURCE, adJson)
 	
 	def handleIncomingMessage(self, resourceEnum: ResourceNameEnum, msg: str) -> bool:
+		"""
+		handle the IncomingMessage
+		
+		@return bool
+		"""
 		logging.info("----->>>The handleIncomingMessage method is being called")
 		# Use the DataUtil class to convert the msg content (which should be JSON) to an ActuatorData instance
 		ad = DataUtil.jsonToActuatorData(self, msg)
 		self._handleIncomingDataAnalysis(msg)
 
 	def handleSensorMessage(self, data: SensorData) -> bool:
+		"""
+		handle the SensorMessage
+		
+		@return bool
+		"""
 		logging.info("----->>>The handleSensorMessage method is being called")
 		# Use the DataUtil class to convert the SensorData to JSON
 		sdJosn = DataUtil.sensorDataToJson(self, data)
@@ -71,16 +90,33 @@ class DeviceDataManager(IDataMessageListener):
 		self._handleSensorDataAnalysis(data)
 		
 	def handleSystemPerformanceMessage(self, data: SystemPerformanceData) -> bool:
+		"""
+		handle the SystemPerformanceMessage
+		
+		@return bool
+		"""
 		logging.info("----->>>The handleSystemPerformanceMessage method is being called")
 		spmJson = DataUtil.systemPerformanceDataToJson(self, data)
 		self._handleUpstreamTransmission(ResourceNameEnum.CDA_SYSTEM_PERF_MSG_RESOURCE, spmJson)
 	
 	def startManager(self):
+		"""
+		Start the DeviceDataManager. 
+		Calls startManager() on the sysPerfManager instance.
+		Calls startManager() on the sensorAdapterManager instance.
+		
+		"""
 		logging.info("----->>>The DeviceDataManager will be started")
 		self.sysPerfManager.startManager()
 		self.sensorAdapterManager.startManager()
 		
 	def stopManager(self):
+		"""
+		Stop the DeviceDataManager. 
+		Calls stopManager() on the sysPerfManager instance.
+		Calls stopManager() on the sensorAdapterManager instance.
+		
+		"""
 		self.sysPerfManager.stopManager()
 		self.sensorAdapterManager.stopManager()
 		
