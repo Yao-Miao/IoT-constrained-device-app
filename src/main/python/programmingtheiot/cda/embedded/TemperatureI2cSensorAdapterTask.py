@@ -23,6 +23,10 @@ class TemperatureI2cSensorAdapterTask(BaseSensorSimTask):
 	"""
 
 	def __init__(self):
+		"""
+		Initialization of class.
+		Create an instance of TemperatureI2cSensorAdapterTask
+		"""
 		super(TemperatureI2cSensorAdapterTask, self).__init__(SensorData.TEMP_SENSOR_TYPE, minVal = SensorDataGenerator.LOW_NORMAL_INDOOR_TEMP, maxVal = SensorDataGenerator.HI_NORMAL_INDOOR_TEMP)
 		self.sensorType = SensorData.TEMP_SENSOR_TYPE
 
@@ -35,6 +39,11 @@ class TemperatureI2cSensorAdapterTask(BaseSensorSimTask):
 		self.i2cBus.write_byte_data(self.tempAddr, 0, 0)
 	
 	def generateTelemetry(self) -> SensorData:
+		"""
+		Generate the Telemetry
+		
+		@return SensorData
+		"""
 		sd = SensorData(sensorType = SensorData.HUMIDITY_SENSOR_TYPE)		
 		val = self.i2cBus.read_word_data(self.pressureAddr, 0, 0);
 		sd.setValue(float(val))

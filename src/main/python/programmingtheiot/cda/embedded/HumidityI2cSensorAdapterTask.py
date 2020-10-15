@@ -23,6 +23,10 @@ class HumidityI2cSensorAdapterTask(BaseSensorSimTask):
 	"""
 
 	def __init__(self):
+		"""
+		Initialization of class.
+		Create an instance of HumidityI2cSensorAdapterTask
+		"""
 		super(HumidityI2cSensorAdapterTask, self).__init__(SensorData.HUMIDITY_SENSOR_TYPE, minVal = SensorDataGenerator.LOW_NORMAL_ENV_HUMIDITY, maxVal = SensorDataGenerator.HI_NORMAL_ENV_HUMIDITY)
 		self.sensorType = SensorData.HUMIDITY_SENSOR_TYPE
 
@@ -35,6 +39,11 @@ class HumidityI2cSensorAdapterTask(BaseSensorSimTask):
 		self.i2cBus.write_byte_data(self.humidAddr, 0, 0)
 	
 	def generateTelemetry(self) -> SensorData:
+		"""
+		Generate the Telemetry
+		
+		@return SensorData
+		"""
 		sd = SensorData(sensorType = SensorData.HUMIDITY_SENSOR_TYPE)		
 		val = self.i2cBus.read_word_data(self.humidAddr, 0, 0);
 		sd.setValue(float(val))

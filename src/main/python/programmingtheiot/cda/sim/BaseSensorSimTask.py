@@ -34,7 +34,6 @@ class BaseSensorSimTask():
 		
 		
 		if dataSet:
-			print("------>" + str(type(dataSet)))
 			self.__dataSet = dataSet.dataEntries
 			self.__useRandomizer = False
 		else:

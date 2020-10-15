@@ -24,6 +24,10 @@ class HumiditySensorEmulatorTask(BaseSensorSimTask):
 	"""
 
 	def __init__(self, dataSet = None):
+		"""
+		Initialization of class.
+		Create an instance of HumiditySensorEmulatorTask
+		"""
 		# Create an instance of SenseHAT and set the emulate flag to True if running the emulator, or False if using real hardware
 		# This can be read from ConfigUtil using the ConfigConst.CONSTRAINED_DEVICE section and the ConfigConst.ENABLE_SENSE_HAT_KEY
 		# If the ConfigConst.ENABLE_SENSE_HAT_KEY is False, set the emulate flag to True, otherwise set to False

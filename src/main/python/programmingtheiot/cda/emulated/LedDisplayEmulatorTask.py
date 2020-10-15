@@ -26,6 +26,10 @@ class LedDisplayEmulatorTask(BaseActuatorSimTask):
 	"""
 
 	def __init__(self):
+		"""
+		Initialization of class.
+		Create an instance of LedDisplayEmulatorTask
+		"""
 		super(LedDisplayEmulatorTask, self).__init__(actuatorType = ActuatorData.LED_DISPLAY_ACTUATOR_TYPE, simpleName = "LED_Display")
 		# Create an instance of SenseHAT and set the emulate flag to True if running the emulator, or False if using real hardware
 		# This can be read from ConfigUtil using the ConfigConst.CONSTRAINED_DEVICE section and the ConfigConst.ENABLE_SENSE_HAT_KEY
@@ -39,6 +43,9 @@ class LedDisplayEmulatorTask(BaseActuatorSimTask):
 		self.sh = SenseHAT(emulate = enableEmulation)
 
 	def _handleActuation(self, cmd: int, val: float = 0.0, stateData: str = None) -> int:
+		"""
+		Receive command and val, display command on screen
+		"""
 		# NOTE: use the API instructions for pisense for help
 		if cmd == ActuatorData.COMMAND_ON:
 			if self.sh.screen:
