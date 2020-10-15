@@ -25,7 +25,7 @@ Chapter04 Branch URL: https://github.com/NU-CSYE6530-Fall2020/constrained-device
 
 ### UML Design Diagram(s)
 
-[CDA_UML](https://github.com/NU-CSYE6530-Fall2020/constrained-device-app-MyronForNEU/blob/chapter04/exercises/chapter04/CDA.jpg).
+![CDA_UML](https://github.com/NU-CSYE6530-Fall2020/constrained-device-app-MyronForNEU/blob/chapter04/exercises/chapter04/CDA.jpg).
 
 
 ### Unit Tests Executed
