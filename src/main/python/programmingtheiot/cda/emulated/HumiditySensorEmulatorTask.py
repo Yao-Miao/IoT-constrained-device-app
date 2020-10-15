@@ -24,7 +24,30 @@ class HumiditySensorEmulatorTask(BaseSensorSimTask):
 	"""
 
 	def __init__(self, dataSet = None):
-		pass
+		# Create an instance of SenseHAT and set the emulate flag to True if running the emulator, or False if using real hardware
+		# This can be read from ConfigUtil using the ConfigConst.CONSTRAINED_DEVICE section and the ConfigConst.ENABLE_SENSE_HAT_KEY
+		# If the ConfigConst.ENABLE_SENSE_HAT_KEY is False, set the emulate flag to True, otherwise set to False
+		
+		super(HumiditySensorEmulatorTask, self).__init__(SensorData.HUMIDITY_SENSOR_TYPE, minVal = SensorDataGenerator.LOW_NORMAL_ENV_HUMIDITY, maxVal = SensorDataGenerator.HI_NORMAL_ENV_HUMIDITY)
+		
+		configUtil = ConfigUtil()
+		if configUtil.getBoolean(section= ConfigConst.CONSTRAINED_DEVICE, key= ConfigConst.ENABLE_SENSE_HAT_KEY):
+			enableEmulation = False 
+		else:
+			enableEmulation = True
+			
+		self.sh = SenseHAT(emulate = enableEmulation)
+
 	
 	def generateTelemetry(self) -> SensorData:
-		pass
+		"""
+		Generate the Telemetry
+		
+		@return SensorData
+		"""
+		sensorData = SensorData(sensorType = SensorData.HUMIDITY_SENSOR_TYPE)
+		sensorVal = self.sh.environ.humidity		
+		sensorData.setValue(sensorVal)
+		self.latestSensorData = sensorData
+
+		return sensorData

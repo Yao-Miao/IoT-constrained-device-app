@@ -16,6 +16,10 @@ from programmingtheiot.data.ActuatorData import ActuatorData
 from programmingtheiot.cda.sim.HumidifierActuatorSimTask import HumidifierActuatorSimTask
 from programmingtheiot.cda.sim.HvacActuatorSimTask import HvacActuatorSimTask
 
+#from programmingtheiot.cda.emulated.HumidifierEmulatorTask import HumidifierEmulatorTask
+#from programmingtheiot.cda.emulated.HvacEmulatorTask import HvacEmulatorTask
+#from programmingtheiot.cda.emulated.LedDisplayEmulatorTask import LedDisplayEmulatorTask
+
 class ActuatorAdapterManager(object):
 	"""
 	Shell representation of class for student implementation.
@@ -31,6 +35,22 @@ class ActuatorAdapterManager(object):
 		self.dataMsgListener = None
 		if self.useEmulator :
 			logging.info("---> Emulators will be used ")
+			
+			# load the Humidifier actuation emulator
+			humidifierModule = __import__('programmingtheiot.cda.emulated.HumidifierEmulatorTask', fromlist = ['HumidifierEmulatorTask'])
+			hueClazz = getattr(humidifierModule, 'HumidifierEmulatorTask')
+			self.humidifierEmulator = hueClazz()
+			
+			# load the hvac actuation emulator
+			hvacModule = __import__('programmingtheiot.cda.emulated.HvacEmulatorTask', fromlist = ['HvacEmulatorTask'])
+			hvacClazz = getattr(hvacModule, 'HvacEmulatorTask')
+			self.hvacEmulator = hvacClazz()
+			
+			# load the led actuation emulator
+			ledModule = __import__('programmingtheiot.cda.emulated.LedDisplayEmulatorTask', fromlist = ['LedDisplayEmulatorTask'])
+			ledClazz = getattr(ledModule, 'LedDisplayEmulatorTask')
+			self.ledEmulator = ledClazz()
+			
 		else:
 			logging.info("---> Simulators will be used ")
 			# create the humidifier actuator
@@ -48,7 +68,17 @@ class ActuatorAdapterManager(object):
 		if self.dataMsgListener :
 			self.dataMsgListener.handleActuatorCommandResponse(data)
 			logging.info('Actuator command received. Processing...')
-			if ~self.useEmulator:
+			if self.useEmulator:
+				if (data.getActuatorType() == ActuatorData.HUMIDIFIER_ACTUATOR_TYPE):
+					if ~data.isResponseFlagEnabled(): 
+						self.humidifierEmulator._handleActuation(data.getCommand(), data.getValue(), data.getStateData())
+				if (data.getActuatorType() == ActuatorData.HVAC_ACTUATOR_TYPE):
+					if ~data.isResponseFlagEnabled(): 
+						self.hvacEmulator._handleActuation(data.getCommand(), data.getValue(), data.getStateData())
+				if (data.getActuatorType() == ActuatorData.LED_DISPLAY_ACTUATOR_TYPE):
+					if ~data.isResponseFlagEnabled(): 
+						self.ledEmulator._handleActuation(data.getCommand(), data.getValue(), data.getStateData())
+			else:
 				if (data.getActuatorType() == ActuatorData.HUMIDIFIER_ACTUATOR_TYPE):
 					if ~data.isResponseFlagEnabled(): 
 						self.humidifierActuator.updateActuator(data)
