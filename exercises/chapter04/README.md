@@ -6,11 +6,18 @@ Be sure to implement all the PIOT-CDA-* issues (requirements) listed at [PIOT-IN
 
 ### Description
 
-NOTE: Include two full paragraphs describing your implementation approach by answering the questions listed below.
-
 What does your implementation do? 
 
+Following the design principles from Chapter 3, use the SenseHAT emulator application to build real sensing and actuation functionality into your CDA. Deploy your CDA to a Raspberry Pi and talk to the I2C bus and GPIO.
+
 How does your implementation work?
+
+1.	Install and configure the SenseHAT emulator and supporting libraries for your platform
+2.	Create the new Python modules that will implement the sensor emulator tasks. These will all be derived from BaseSensorSimTask, and will mimic the design of their simulator counterparts, but with a bit more implementation detail.
+3.	Create the new Python modules that will implement the actuator emulator tasks. These will all be derived from BaseActuatorSimTask, and will mimic the design of their simulator counterparts, but with a bit more implementation detail.
+4.	Create the new Python modules that will implement the sensor emulator tasks. These will all be derived from BaseSensorSimTask, and will mimic the design of their simulator counterparts, but with significantly more implementation detail.
+5.	 Edit the Python module named SensorAdapterManager with class name SensorAdapterManager and add the SenseHAT emulator functionality.
+6.	Edit the Python module named ActuatorAdapterManager with class name ActuatorAdapterManager and add the SenseHAT emulator functionality.
 
 ### Code Repository and Branch
 
@@ -27,23 +34,15 @@ book [Programming the IoT](https://learning.oreilly.com/library/view/programming
 
 ### Unit Tests Executed
 
-NOTE: TA's will execute your unit tests. You only need to list each test case below
-(e.g. ConfigUtilTest, DataUtilTest, etc). Be sure to include all previous tests, too,
-since you need to ensure you haven't introduced regressions.
 
-- 
-- 
-- 
 
 ### Integration Tests Executed
 
-NOTE: TA's will execute most of your integration tests using their own environment, with
-some exceptions (such as your cloud connectivity tests). In such cases, they'll review
-your code to ensure it's correct. As for the tests you execute, you only need to list each
-test case below (e.g. SensorSimAdapterManagerTest, DeviceDataManagerTest, etc.)
-
-- 
-- 
-- 
+- SenseHatEmulatorQuickTest
+- SensorEmulatorManagerTest
+- ActuatorEmulatorManagerTest
+- EmbeddedSensorAdapterTest
+- SensorAdapterManagerTest
+- ActuatorAdapterManagerTest
 
 EOF.
