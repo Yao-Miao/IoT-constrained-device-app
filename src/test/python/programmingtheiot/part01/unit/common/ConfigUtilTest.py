@@ -48,6 +48,7 @@ class ConfigUtilTest(unittest.TestCase):
 		self.assertTrue(enableLogging)
 	
 	def testGetCredentials(self):
+		
 		creds = self.configUtil.getCredentials(ConfigConst.CONSTRAINED_DEVICE)
 		self.assertIsNotNone(creds)
 		self.assertEqual(creds[ConfigConst.USER_NAME_TOKEN_KEY], self.DEFAULT_USER)
