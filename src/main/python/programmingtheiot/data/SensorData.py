@@ -35,6 +35,7 @@ class SensorData(BaseIotData):
 		# The private member __value: record the current value that gets from sensor 
 		# add by Yao Miao
 		self.__value = value;
+		self.__sensorType = sensorType;
 	
 	def getSensorType(self) -> int:
 		"""
@@ -42,7 +43,7 @@ class SensorData(BaseIotData):
 		
 		@return int
 		"""
-		return self.sensorType
+		return self.__sensorType
 	
 	def getValue(self) -> float:
 		"""

@@ -20,18 +20,29 @@ class BaseSystemUtilTask():
 	"""
 	
 	def __init__(self):
+		"""
+		Initialization of class.
+		
+		"""
 		###
 		# TODO: fill in the details here
 		self.latestSensorData = None
-		
-		pass
 	
 	def generateTelemetry(self) -> SensorData:
+		"""
+		Generate the Telemetry
+		
+		@return SensorData
+		"""
+		
 		###
 		# TODO: fill in the details here
 		#
 		# NOTE: Use self._getSystemUtil() to retrieve the value from the sub-class
-		pass
+		self.latestSensorData = SensorData()
+		val = self._getSystemUtil()
+		self.latestSensorData.setValue(val)
+		return self.latestSensorData
 		
 	def getTelemetryValue(self) -> float:
 		"""
@@ -39,8 +50,14 @@ class BaseSystemUtilTask():
 		
 		@return float
 		"""
-		val = self._getSystemUtil()
+		
+		if self.latestSensorData == None:
+			self.latestSensorData = self.generateTelemetry()
+		
+		val = self.latestSensorData.getValue()
+			
 		logging.info('The subclass <' + self.__class__.__name__ + '> get a value: ' + str(val))
+		
 		return val
 	
 	def _getSystemUtil(self) -> float:
