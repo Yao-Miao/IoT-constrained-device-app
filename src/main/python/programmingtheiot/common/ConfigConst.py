@@ -40,6 +40,9 @@ CONSTRAINED_DEVICE = CONSTRAINED + DEVICE
 GATEWAY_SERVICE    = GATEWAY + SERVICE
 CLOUD_SERVICE      = CLOUD + SERVICE
 
+##add by miaoyao
+DATA_GATEWAY_SERVICE = 'Data.GatewayService'
+
 #####
 # Resource and Topic Names
 #

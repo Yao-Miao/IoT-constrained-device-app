@@ -26,6 +26,7 @@ from programmingtheiot.data.DataUtil import DataUtil
 from programmingtheiot.data.ActuatorData import ActuatorData
 from programmingtheiot.data.SensorData import SensorData
 from programmingtheiot.data.SystemPerformanceData import SystemPerformanceData
+from programmingtheiot.cda.connection.RedisPersistenceAdapter import RedisPersistenceAdapter
 
 
 class DeviceDataManager(IDataMessageListener):
@@ -47,6 +48,8 @@ class DeviceDataManager(IDataMessageListener):
 		self.sysPerfManager = SystemPerformanceManager()
 		self.sensorAdapterManager = SensorAdapterManager()
 		self.actuatorAdapterManager = ActuatorAdapterManager()
+		##add by miaoyao @10/30/2020
+		self.redisClient = RedisPersistenceAdapter()
 		
 		self.enableHandleTempChangeOnDevice = self.configUtil.getBoolean(ConfigConst.CONSTRAINED_DEVICE, ConfigConst.ENABLE_HANDLE_TEMP_CHANGE_ON_DEVICE_KEY)
 
@@ -88,6 +91,7 @@ class DeviceDataManager(IDataMessageListener):
 		sdJosn = DataUtil.sensorDataToJson(self, data)
 		self._handleUpstreamTransmission(ResourceNameEnum.CDA_SENSOR_MSG_RESOURCE, sdJosn)
 		self._handleSensorDataAnalysis(data)
+		self.redisClient.storeData(ResourceNameEnum.CDA_SENSOR_MSG_RESOURCE, data)
 		
 	def handleSystemPerformanceMessage(self, data: SystemPerformanceData) -> bool:
 		"""
@@ -109,6 +113,7 @@ class DeviceDataManager(IDataMessageListener):
 		logging.info("----->>>The DeviceDataManager will be started")
 		self.sysPerfManager.startManager()
 		self.sensorAdapterManager.startManager()
+		self.redisClient.connectClient()
 		
 	def stopManager(self):
 		"""
@@ -119,6 +124,7 @@ class DeviceDataManager(IDataMessageListener):
 		"""
 		self.sysPerfManager.stopManager()
 		self.sensorAdapterManager.stopManager()
+		self.redisClient.disconnectClient()
 		
 		logging.info("----->>>The DeviceDataManager stopped")
 		

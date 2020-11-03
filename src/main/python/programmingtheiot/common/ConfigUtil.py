@@ -211,6 +211,5 @@ class ConfigUtil(metaclass = Singleton):
 		"""
 		if (self.isLoaded == False or forceReload):
 			self._loadConfig()
-		
 		return self.configParser
 	
