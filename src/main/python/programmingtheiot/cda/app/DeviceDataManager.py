@@ -57,6 +57,13 @@ class DeviceDataManager(IDataMessageListener):
 
 		self.triggerHvacTempCeiling = self.configUtil.getFloat(ConfigConst.CONSTRAINED_DEVICE, ConfigConst.TRIGGER_HVAC_TEMP_CEILING_KEY);
 		
+		##add by miaoyao @11/02/2020
+		self.enableMqtt = self.configUtil.getBoolean(ConfigConst.CONSTRAINED_DEVICE, ConfigConst.ENABLE_MQTT_KEY)
+		if self.enableMqtt:
+			self.mqttClient = MqttClientConnector()
+		
+		
+		
 			
 	def handleActuatorCommandResponse(self, data: ActuatorData) -> bool:
 		"""
@@ -114,6 +121,8 @@ class DeviceDataManager(IDataMessageListener):
 		self.sysPerfManager.startManager()
 		self.sensorAdapterManager.startManager()
 		self.redisClient.connectClient()
+		if self.enableMqtt:
+			self.mqttClient.connectClient()
 		
 	def stopManager(self):
 		"""
@@ -125,6 +134,8 @@ class DeviceDataManager(IDataMessageListener):
 		self.sysPerfManager.stopManager()
 		self.sensorAdapterManager.stopManager()
 		self.redisClient.disconnectClient()
+		if self.enableMqtt:
+			self.mqttClient.disconnectClient()
 		
 		logging.info("----->>>The DeviceDataManager stopped")
 		
@@ -170,4 +181,8 @@ class DeviceDataManager(IDataMessageListener):
 		2) Act on msg: If # 1 is true, send message upstream using one (or both) client connections.
 		"""
 		logging.info("----->>>The _handleUpstreamTransmission method is being called")
-		pass
+		if self.enableMqtt:
+			if resourceName == ResourceNameEnum.CDA_SENSOR_MSG_RESOURCE or resourceName == ResourceNameEnum.CDA_SYSTEM_PERF_MSG_RESOURCE:
+				self.mqttClient.publishMessage(resourceName, msg)
+				
+			

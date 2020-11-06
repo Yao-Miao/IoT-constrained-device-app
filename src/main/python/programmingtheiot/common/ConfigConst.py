@@ -107,6 +107,8 @@ ENABLE_CRYPT_KEY     = 'enableCrypt'
 ENABLE_EMULATOR_KEY  = 'enableEmulator'
 ENABLE_SENSE_HAT_KEY = 'enableSenseHAT'
 ENABLE_LOGGING_KEY   = 'enableLogging'
+##add by miaoyao, in order to implement mqtt
+ENABLE_MQTT_KEY      = 'enableMqtt'
 USE_WEB_ACCESS_KEY   = 'useWebAccess'
 POLL_CYCLES_KEY      = 'pollCycleSecs'
 KEEP_ALIVE_KEY       = 'keepAlive'

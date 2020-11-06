@@ -130,9 +130,6 @@ class SensorAdapterManager(object):
 			tempSd = self.temperatureSensorSimTask .generateTelemetry()
 		
 		if self.dataMsgListener :
-			#self.dataMsgListener.handleSensorMessage(humidityVal)
-			#self.dataMsgListener.handleSensorMessage(pressureVal)
-			#self.dataMsgListener.handleSensorMessage(tempVal)
 			self.dataMsgListener.handleSensorMessage(humiditySd)
 			self.dataMsgListener.handleSensorMessage(pressureSd)
 			self.dataMsgListener.handleSensorMessage(tempSd)

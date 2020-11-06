@@ -38,37 +38,118 @@ class MqttClientConnector(IPubSubClient):
 		the same clientID continuously attempts to re-connect, causing the broker to
 		disconnect the previous instance.
 		"""
-		pass
+		self.config = ConfigUtil.ConfigUtil()
+
+		self.host = self.config.getProperty(ConfigConst.MQTT_GATEWAY_SERVICE, ConfigConst.HOST_KEY, ConfigConst.DEFAULT_HOST)
+
+		self.port = self.config.getInteger(ConfigConst.MQTT_GATEWAY_SERVICE, ConfigConst.PORT_KEY, ConfigConst.DEFAULT_MQTT_PORT)
+
+		self.keepAlive = self.config.getInteger(ConfigConst.MQTT_GATEWAY_SERVICE, ConfigConst.KEEP_ALIVE_KEY, ConfigConst.DEFAULT_KEEP_ALIVE)
+		
+		self.clientID = clientID
+		self.mc = None
+
+		logging.info('\tMQTT Broker Host: ' + self.host)
+		logging.info('\tMQTT Broker Port: ' + str(self.port))
+		logging.info('\tMQTT Keep Alive:  ' + str(self.keepAlive))
 
 	def connect(self) -> bool:
-		pass
+		"""
+		Connect to a remote broker.
+		host is the hostname or IP address of the remote broker.
+        port is the network port of the server host to connect to.
+		"""
+		
+		if not self.mc:
+			self.mc = mqttClient.Client(client_id = self.clientID, clean_session = True)
+			self.mc.on_connect = self.onConnect
+			self.mc.on_disconnect = self.onDisconnect
+			self.mc.on_message = self.onMessage
+			self.mc.on_publish = self.onPublish
+			self.mc.on_subscribe = self.onSubscribe
+			
+	
+		if not self.mc.is_connected():
+			self.mc.connect(self.host, self.port, self.keepAlive)
+			self.mc.loop_start()
+			return True
+		else:
+			logging.warn('MQTT client is already connected. Ignoring connect request.')
+			return False
 		
 	def disconnect(self) -> bool:
-		pass
+		"""
+		Disconnect from the remote broker.
+		"""
+		
+		if self.mc.is_connected():
+			self.mc.disconnect()
+			self.mc.loop_stop()
 		
 	def onConnect(self, client, userdata, flags, rc):
-		pass
+		"""
+		callback method to handle connection notification events
+		"""
+		
+		logging.info('MQTT client is successfully connected.')
 		
 	def onDisconnect(self, client, userdata, rc):
-		pass
+		"""
+		callback method to handle connection notification events
+		"""
+		
+		logging.info('MQTT client is successfully disconnected.')
 		
 	def onMessage(self, client, userdata, msg):
-		pass
+		"""
+		callback method - this will be called whenever a message is received on the topic for which your client has subscribed
+		"""
+		
+		logging.info('onMessage is being called------>client:' + str(client._client_id) + '   msg:' + str(msg.payload))
 			
 	def onPublish(self, client, userdata, mid):
-		pass
+		"""
+		callback method to handle message publish notification events
+		"""
+		
+		logging.info('onPublish is being called------>client:' + str(client._client_id) + '   mid:' + str(mid))
+		
 	
 	def onSubscribe(self, client, userdata, mid, granted_qos):
-		pass
+		"""
+		callback method to handle topic subscription notification events
+		"""
+		
+		logging.info('onSubscribe is being called------>client:' + str(client._client_id) + '   mid:' + str(mid))
 	
 	def publishMessage(self, resource: ResourceNameEnum, msg, qos: int = IPubSubClient.DEFAULT_QOS):
-		pass
+		"""
+		handle all publish functionality
+		@param resource: that is used to get topic. The topic that the message should be published on
+		@param msg: The actual message to send
+		@param qos: The quality of service level to use.
+		"""
+		topic = str(resource)
+		if qos < 0 or qos > 2:
+			qos = IPubSubClient.DEFAULT_QOS
+		self.mc.publish(topic=topic, payload=msg, qos=qos)
+		return True
 	
 	def subscribeToTopic(self, resource: ResourceNameEnum, qos: int = IPubSubClient.DEFAULT_QOS):
-		pass
+		"""
+		Subscribe the client to one or more topics
+		@param resource: that is used to get topic. A string specifying the subscription topic to subscribe to.
+		@param qos: The desired quality of service level for the subscription.
+		"""
+		topic = str(resource)
+		if qos < 0 or qos > 2:
+			qos = IPubSubClient.DEFAULT_QOS
+		self.mc.subscribe(topic=topic, qos=qos)
+		return True
 	
 	def unsubscribeFromTopic(self, resource: ResourceNameEnum):
 		pass
 
 	def setDataMessageListener(self, listener: IDataMessageListener) -> bool:
 		pass
+	
