@@ -6,8 +6,6 @@ Be sure to implement all the PIOT-CDA-* issues (requirements) listed at [PIOT-IN
 
 ### Description
 
-NOTE: Include two full paragraphs describing your implementation approach by answering the questions listed below.
-
 What does your implementation do?
 
 Build a robust publish/subscribe (pub/sub) data communications capability into your GDA using MQTT. Prove you can communicate between your GDA and CDA using this protocol and an MQTT message broker server.
