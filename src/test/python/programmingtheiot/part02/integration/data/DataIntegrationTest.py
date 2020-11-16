@@ -21,6 +21,8 @@ from programmingtheiot.data.DataUtil import DataUtil
 from programmingtheiot.data.ActuatorData import ActuatorData
 from programmingtheiot.data.SensorData import SensorData
 from programmingtheiot.data.SystemPerformanceData import SystemPerformanceData
+from programmingtheiot.cda.system.SystemCpuUtilTask import SystemCpuUtilTask
+from programmingtheiot.cda.system.SystemMemUtilTask import SystemMemUtilTask
 
 class DataIntegrationTest(unittest.TestCase):
 	"""
@@ -92,6 +94,17 @@ class DataIntegrationTest(unittest.TestCase):
 		logging.info("\n\n----- [SystemPerformanceData to JSON to file] -----")
 		
 		dataObj  = SystemPerformanceData()
+		
+		
+		"""
+		set CpuUtilization and MemoryUtilization
+		"""
+		scut = SystemCpuUtilTask()
+		smut = SystemMemUtilTask()
+		dataObj.setCpuUtilization(scut.getTelemetryValue())
+		dataObj.setMemoryUtilization(smut.getTelemetryValue())
+		
+		
 		dataStr  = self.dataUtil.sensorDataToJson(dataObj)
 		fileName = self.cdaDataPath + '/SystemPerformanceData.dat'
 

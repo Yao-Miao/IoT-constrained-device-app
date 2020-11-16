@@ -38,9 +38,16 @@ class DataUtilTest(unittest.TestCase):
 		self.sdName = "FooBar SensorData"
 		self.spdName = "FooBar SystemPerformanceData"
 		
+		"""
+		this code don't match the classes I created
 		self.sampleSpdJson = "{\"name\": \"" + self.spdName + "\", \"timeStamp\":\"2019.01.16 21:32:34.123123\",\"cpuUtil\":0.0,\"diskUtil\":0.0,\"memUtil\":0.0}"
 		self.sampleAdJson = "{\"name\": \"" + self.adName + "\", \"timeStamp\": \"2019-01-20 15:38:35.123123\", \"hasError\": false, \"command\": 0, \"statusCode\": 0, \"stateData\": null, \"curValue\": 0.0}"
 		self.sampleSdJson = "{\"name\": \"" + self.sdName + "\", \"timeStamp\":\"2019.01.16 21:32:34.123123\",\"curValue\":0.0}"
+		"""
+		
+		self.sampleSpdJson = "{\"name\": \"" + self.spdName + "\", \"timeStamp\":\"2019.01.16 21:32:34.123123\",\"_SystemPerformanceData__cpuUtil\":0.5,\"_SystemPerformanceData__diskUtil\":0.5,\"_SystemPerformanceData__memUtil\":0.5}"
+		self.sampleAdJson = "{\"name\": \"" + self.adName + "\", \"timeStamp\": \"2019-01-20 15:38:35.123123\", \"hasError\": false, \"statusCode\": 1, \"_ActuatorData__actuatorType\": 0, \"_ActuatorData__command\": 1, \"_ActuatorData__stateData\": null, \"_ActuatorData__value\": 1.1,\"_ActuatorData__responseFlag\": false}"
+		self.sampleSdJson = "{\"name\": \"" + self.sdName + "\", \"timeStamp\":\"2019.01.16 21:32:34.123123\",\"_SensorData__value\":1.6}"
 		
 	def setUp(self):
 		logging.info("================================================")
