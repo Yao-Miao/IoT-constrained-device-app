@@ -238,7 +238,10 @@ class CoapClientConnector(IRequestResponseClient):
 			logging.info('Token: ' + str(response.token))
 			logging.info(str(response.location_path))
 			logging.info(str(response.payload))
-			
+	
+	"""
+	Callback function for sendDeleteRequest()
+	"""		
 	def _onDeleteResponse(self, response):
 		logging.info('DELETE response received.')
 
