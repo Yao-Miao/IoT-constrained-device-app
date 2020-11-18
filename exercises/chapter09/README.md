@@ -8,22 +8,22 @@ Be sure to implement all the PIOT-CDA-* issues (requirements) listed at [PIOT-IN
 
 What does your implementation do? 
 
-Build a robust yet lightweight request/response data communications client into the GDA using CoAP. Prove you can communicate between your GDA and CDA using this protocol and the server you built in Chapter 8. Send CoAP requests (GET, POST, PUT, DELETE) to the GDA CoAP server, and - optionally from the CDA - observe a resource hosted by your GDA using CoAP's observe functionality.
+Build a robust yet lightweight request/response data communications client into the CDA using CoAP. Prove you can communicate between your GDA and CDA using this protocol and the server you built in Chapter 8. Send CoAP requests (GET, POST, PUT, DELETE) to the GDA CoAP server, and - optionally from the CDA - observe a resource hosted by your GDA using CoAP's observe functionality.
 
 How does your implementation work?
 
-1.	Create a new Java class named CoapClientConnector that implements the IRequestResponse interface.
-2.	Add a custom response handler to process responses from asynchronous requests
-3.	Add DISCOVER functionality to CoapClientConnector
-4.	Add GET functionality to CoapClientConnector
-5.	Add PUT functionality to CoapClientConnector
-6.	Add POST functionality to CoapClientConnector
-7.	Add DELETE functionality to CoapClientConnector
-8.	Create a new Python class named CoapClientConnectorTest to test CoapClientConnector.
+1.	Create a new Python module named CoapClientConnector with class name CoapClientConnector that uses the IRequestResponse interface.
+2.	Add DISCOVER functionality to CoapClientConnector
+3.	Add GET functionality to CoapClientConnector
+4.	Add PUT functionality to CoapClientConnector
+5.	Add POST functionality to CoapClientConnector
+6.	Add DELETE functionality to CoapClientConnector
+7.	Create a new Python class named CoapClientConnectorTest to test CoapClientConnector.
+
 
 ### Code Repository and Branch
 
-URL: 
+URL: https://github.com/NU-CSYE6530-Fall2020/constrained-device-app-MyronForNEU/tree/chapter09
 
 ### UML Design Diagram(s)
 
