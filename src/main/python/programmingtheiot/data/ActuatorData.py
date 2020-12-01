@@ -8,6 +8,7 @@
 #
 
 from programmingtheiot.data.BaseIotData import BaseIotData
+import programmingtheiot.common.ConfigConst as ConfigConst
 
 class ActuatorData(BaseIotData):
 	"""
@@ -28,20 +29,30 @@ class ActuatorData(BaseIotData):
 	
 
 
-	def __init__(self, actuatorType = DEFAULT_ACTUATOR_TYPE, d = None):
+	
+	def __init__(self, actuatorType: int = DEFAULT_ACTUATOR_TYPE, name = ConfigConst.NOT_SET, d = None):
 		"""
-		Initialization of class.
-		Create an instance of ActuatorData
-		"""
-		super(ActuatorData, self).__init__(d = d)
+		Constructor.
 		
-		# The private member in the class
-		# add by Yao Miao
-		self.__actuatorType = actuatorType
-		self.__command = self.DEFAULT_COMMAND
-		self.__stateData = ""
-		self.__value = 0.0
-		self.__responseFlag = False
+		@param d Defaults to None. The data (dict) to use for setting all parameters.
+		It's provided here as a convenience - mostly for testing purposes. The utility
+		in DataUtil should be used instead.
+		"""
+		super(ActuatorData, self).__init__(name = name, d = d)
+		
+		self.isResponse = False
+		self.actuatorType = actuatorType
+		
+		if d:
+			self.command = d['command']
+			self.stateData = d['stateData']
+			self.value = d['curValue']
+			self.actuatorType = d['actuatorType']
+		else:
+			self.command = self.DEFAULT_COMMAND
+			self.stateData = None
+			self.value = self.DEFAULT_VAL
+			self.actuatorType = actuatorType
 	
 		
 	def getActuatorType(self):
@@ -50,7 +61,7 @@ class ActuatorData(BaseIotData):
 		
 		@return str
 		"""
-		return self.__actuatorType	
+		return self.actuatorType	
 	
 	def getCommand(self) -> int:
 		"""
@@ -58,7 +69,7 @@ class ActuatorData(BaseIotData):
 		
 		@return int
 		"""
-		return self.__command
+		return self.command
 	
 	def getStateData(self) -> str:
 		"""
@@ -66,7 +77,7 @@ class ActuatorData(BaseIotData):
 		
 		@return str
 		"""
-		return self.__stateData
+		return self.stateData
 	
 	def getValue(self) -> float:
 		"""
@@ -74,7 +85,7 @@ class ActuatorData(BaseIotData):
 		
 		@return float
 		"""
-		return self.__value
+		return self.value
 	
 	def isResponseFlagEnabled(self) -> bool:
 		"""
@@ -82,38 +93,38 @@ class ActuatorData(BaseIotData):
 		
 		@return bool
 		"""
-		return self.__responseFlag
+		return self.isResponse
 	
 	def setCommand(self, command: int):
 		"""
 		Set the Command of the instance
 		"""
-		self.__command = command
+		self.command = command
 	
 	def setAsResponse(self):
 		"""
 		Set the ResponseFlag of the instance
 		"""
-		self.__responseFlag = True
+		self.responseFlag = True
 		
 	def setStateData(self, stateData: str):
 		"""
 		Set the StateData of the instance
 		"""
-		self.__stateData = stateData
+		self.stateData = stateData
 	
 	def setValue(self, val: float):
 		"""
 		Set the value of the instance
 		"""
-		self.__value = val
+		self.value = val
 		
 	def _handleUpdateData(self, data):
 		"""
 		update the instance
 		"""
-		self.__command = data.__command
-		self.__stateData = data.__stateData
-		self.__value = data.__value
+		self.command = data.command
+		self.stateData = data.stateData
+		self.value = data.value
 		
 		

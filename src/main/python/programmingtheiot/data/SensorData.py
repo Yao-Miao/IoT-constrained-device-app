@@ -8,6 +8,7 @@
 #
 
 from programmingtheiot.data.BaseIotData import BaseIotData
+import programmingtheiot.common.ConfigConst as ConfigConst
 
 class SensorData(BaseIotData):
 	"""
@@ -23,19 +24,24 @@ class SensorData(BaseIotData):
 	PRESSURE_SENSOR_TYPE = 2
 	TEMP_SENSOR_TYPE = 3
 	
+			
 		
-	def __init__(self, sensorType = DEFAULT_SENSOR_TYPE, value = DEFAULT_VAL, d = None):
+	def __init__(self, sensorType: int = DEFAULT_SENSOR_TYPE, name = ConfigConst.NOT_SET, d = None):
 		"""
-		Initialization of class.
-		Create an instance of SensorData
-		"""
-		super(SensorData, self).__init__(d = d)
+		Constructor.
 		
-		# initial the __value
-		# The private member __value: record the current value that gets from sensor 
-		# add by Yao Miao
-		self.__value = value;
-		self.__sensorType = sensorType;
+		@param d Defaults to None. The data (dict) to use for setting all parameters.
+		It's provided here as a convenience - mostly for testing purposes. The utility
+		in DataUtil should be used instead.
+		"""
+		super(SensorData, self).__init__(name = name, d = d)
+		
+		if d:
+			self.value = d['value']
+			self.sensorType = d['sensorType']
+		else:
+			self.value = self.DEFAULT_VAL
+			self.sensorType = sensorType
 	
 	def getSensorType(self) -> int:
 		"""
@@ -43,7 +49,7 @@ class SensorData(BaseIotData):
 		
 		@return int
 		"""
-		return self.__sensorType
+		return self.sensorType
 	
 	def getValue(self) -> float:
 		"""
@@ -51,7 +57,7 @@ class SensorData(BaseIotData):
 		
 		@return float
 		"""
-		return self.__value
+		return self.value
 	
 	def setValue(self, newVal: float):
 		"""
@@ -59,10 +65,10 @@ class SensorData(BaseIotData):
 		
 		@return float
 		"""
-		self.__value = newVal
+		self.value = newVal
 		
 	def _handleUpdateData(self, data):
 		"""
 		update the instance
 		"""
-		self.__value = data.__value
+		self.value = data.value

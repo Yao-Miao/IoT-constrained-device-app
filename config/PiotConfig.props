@@ -33,7 +33,7 @@ enableCrypt    = False
 # CDA specific configuration information
 #
 [ConstrainedDevice]
-enableEmulator  = True
+enableEmulator  = False
 enableSenseHAT  = False
 enableLogging   = True
 enableMqtt		= True

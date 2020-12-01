@@ -51,8 +51,6 @@ class SensorAdapterManager(object):
 		If self.useEmulator is true, we will use Emulator to generate sensor data
 		Else we will use SensorDataGenerator
 		"""
-		##In order to test Emulator
-		self.useEmulator = True
 		if self.useEmulator :
 			logging.info("---> Emulators will be used ")
 			

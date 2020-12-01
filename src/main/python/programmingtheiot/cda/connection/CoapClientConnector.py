@@ -122,7 +122,7 @@ class CoapClientConnector(IRequestResponseClient):
 	Send post request to the server
 	"""
 	def sendPostRequest(self, resource: ResourceNameEnum, payload: str, enableCON = False, timeout: int = IRequestResponseClient.DEFAULT_TIMEOUT) -> bool:
-		logging.info("the method sendPostRequest is called")
+		#logging.info("the method sendPostRequest is called")
 		if resource:
 			logging.debug("Issuing POST with path: " + resource.value)
 			request = self.coapClient.mk_request(defines.Codes.POST, path = resource.value)
@@ -141,7 +141,7 @@ class CoapClientConnector(IRequestResponseClient):
 	Send put request to the server
 	"""
 	def sendPutRequest(self, resource: ResourceNameEnum, payload: str, enableCON = False, timeout: int = IRequestResponseClient.DEFAULT_TIMEOUT) -> bool:
-		logging.info("the method sendPutRequest is called")
+		#logging.info("the method sendPutRequest is called")
 		if resource:
 			logging.debug("Issuing PUT with path: " + resource.value)
 			request = self.coapClient.mk_request(defines.Codes.PUT, path = resource.value)
@@ -154,7 +154,11 @@ class CoapClientConnector(IRequestResponseClient):
 			self.coapClient.send_request(request = request, callback = self._onPutResponse, timeout = timeout)
 		else:
 			logging.warning("Can't test PUT - no path or path list provided.")
-
+			
+			
+	"""
+	Set the Data Message Listener
+	"""
 	def setDataMessageListener(self, listener: IDataMessageListener) -> bool:
 		self.dataMsgListener = IDataMessageListener
 
@@ -221,7 +225,7 @@ class CoapClientConnector(IRequestResponseClient):
 	Callback function for sendPutRequest()
 	"""		
 	def _onPutResponse(self, response):
-		logging.info('PUT response received.')
+		#logging.info('PUT response received.')
 
 		if response:
 			logging.info('Token: ' + str(response.token))
@@ -232,7 +236,7 @@ class CoapClientConnector(IRequestResponseClient):
 	Callback function for sendPostRequest()
 	"""			
 	def _onPostResponse(self, response):
-		logging.info('POST response received.')
+		#logging.info('POST response received.')
 
 		if response:
 			logging.info('Token: ' + str(response.token))

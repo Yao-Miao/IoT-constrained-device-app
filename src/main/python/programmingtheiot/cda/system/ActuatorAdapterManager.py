@@ -34,8 +34,6 @@ class ActuatorAdapterManager(object):
 		self.useEmulator = useEmulator
 		self.dataMsgListener = None
 		
-		##In order to test Emulator
-		self.useEmulator = True
 		
 		if self.useEmulator :
 			logging.info("---> Emulators will be used ")
@@ -89,6 +87,7 @@ class ActuatorAdapterManager(object):
 				if (data.getActuatorType() == ActuatorData.HVAC_ACTUATOR_TYPE):
 					if ~data.isResponseFlagEnabled(): 
 						self.hvacActuator.updateActuator(data)
+						
 			
 	
 	def setDataMessageListener(self, listener: IDataMessageListener) -> bool:

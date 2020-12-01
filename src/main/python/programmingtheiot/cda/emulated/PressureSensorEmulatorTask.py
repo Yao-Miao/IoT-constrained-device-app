@@ -47,7 +47,7 @@ class PressureSensorEmulatorTask(BaseSensorSimTask):
 		
 		@return SensorData
 		"""
-		sensorData = SensorData(sensorType = SensorData.PRESSURE_SENSOR_TYPE)
+		sensorData = SensorData(name = ConfigConst.PRESSURE_SENSOR_NAME, sensorType = self.sensorType)
 		sensorVal = self.sh.environ.pressure		
 		sensorData.setValue(sensorVal)
 		self.latestSensorData = sensorData

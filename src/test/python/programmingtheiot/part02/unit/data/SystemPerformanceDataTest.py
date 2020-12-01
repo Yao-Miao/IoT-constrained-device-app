@@ -42,7 +42,7 @@ class SystemPerformanceDataTest(unittest.TestCase):
 	def testDefaultValues(self):
 		spd = SystemPerformanceData()
 		
-		self.assertEquals(spd.getName(), ConfigConst.NOT_SET)
+		self.assertEquals(spd.getName(), ConfigConst.SYS_PERF_DATA)
 		self.assertEquals(spd.getStatusCode(), SystemPerformanceData.DEFAULT_STATUS)
 		
 		self.assertEquals(spd.getCpuUtilization(), SystemPerformanceData.DEFAULT_VAL)
@@ -62,7 +62,7 @@ class SystemPerformanceDataTest(unittest.TestCase):
 		spd = SystemPerformanceData()
 		spd2 = self._createTestSystemPerformanceData()
 		
-		self.assertEquals(spd.getName(), ConfigConst.NOT_SET)
+		self.assertEquals(spd.getName(), ConfigConst.SYS_PERF_DATA)
 		
 		self.assertEquals(spd.getCpuUtilization(), SystemPerformanceData.DEFAULT_VAL)
 		self.assertEquals(spd.getDiskUtilization(), SystemPerformanceData.DEFAULT_VAL)

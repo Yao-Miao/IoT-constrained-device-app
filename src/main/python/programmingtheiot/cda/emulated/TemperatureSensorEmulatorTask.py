@@ -47,7 +47,7 @@ class TemperatureSensorEmulatorTask(BaseSensorSimTask):
 		
 		@return SensorData
 		"""
-		sensorData = SensorData(sensorType = SensorData.TEMP_SENSOR_TYPE)
+		sensorData = SensorData(name = ConfigConst.TEMP_SENSOR_NAME, sensorType = self.sensorType)
 		sensorVal = self.sh.environ.temperature		
 		sensorData.setValue(sensorVal)
 		self.latestSensorData = sensorData

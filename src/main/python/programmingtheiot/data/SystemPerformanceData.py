@@ -8,6 +8,7 @@
 #
 
 from programmingtheiot.data.BaseIotData import BaseIotData
+import programmingtheiot.common.ConfigConst as ConfigConst
 
 class SystemPerformanceData(BaseIotData):
 	"""
@@ -15,16 +16,25 @@ class SystemPerformanceData(BaseIotData):
 	
 	"""
 	DEFAULT_VAL = 0.0
-	
+		
 	def __init__(self, d = None):
 		"""
-		Initialization of class.
-		Create an instance of SystemPerformanceData
+		Constructor.
+		
+		@param d Defaults to None. The data (dict) to use for setting all parameters.
+		It's provided here as a convenience - mostly for testing purposes. The utility
+		in DataUtil should be used instead.
 		"""
-		super(SystemPerformanceData, self).__init__(d = d)
-		self.__cpuUtil = 0
-		self.__diskUtil = 0
-		self.__memUtil = 0
+		super(SystemPerformanceData, self).__init__(name = ConfigConst.SYS_PERF_DATA, d = d)
+		
+		if d:
+			self.cpuUtil = d['cpuUtil']
+			self.diskUtil = d['diskUtil']
+			self.memUtil = d['memUtil']
+		else:
+			self.cpuUtil = self.DEFAULT_VAL
+			self.diskUtil = self.DEFAULT_VAL
+			self.memUtil = self.DEFAULT_VAL
 	
 	def getCpuUtilization(self):
 		"""
@@ -32,7 +42,7 @@ class SystemPerformanceData(BaseIotData):
 		
 		@return float
 		"""
-		return self.__cpuUtil 
+		return self.cpuUtil 
 	
 	def getDiskUtilization(self):
 		"""
@@ -40,7 +50,7 @@ class SystemPerformanceData(BaseIotData):
 		
 		@return float
 		"""
-		return self.__diskUtil 
+		return self.diskUtil 
 	
 	def getMemoryUtilization(self):
 		"""
@@ -48,30 +58,30 @@ class SystemPerformanceData(BaseIotData):
 		
 		@return float
 		"""
-		return self.__memUtil
+		return self.memUtil
 	
 	def setCpuUtilization(self, cpuUtil):
 		"""
 		Set the CpuUtilization of the instance
 		"""
-		self.__cpuUtil= cpuUtil
+		self.cpuUtil= cpuUtil
 	
 	def setDiskUtilization(self, diskUtil):
 		"""
 		Set the DiskUtilization of the instance
 		"""
-		self.__diskUtil = diskUtil
+		self.diskUtil = diskUtil
 	
 	def setMemoryUtilization(self, memUtil):
 		"""
 		Set the MemoryUtilization of the instance
 		"""
-		self.__memUtil = memUtil
+		self.memUtil = memUtil
 	
 	def _handleUpdateData(self, data):
 		"""
 		update the instance
 		"""
-		self.__cpuUtil = data.__cpuUtil
-		self.__diskUtil = data.__diskUtil
-		self.__memUtil = data.__memUtil
+		self.cpuUtil = data.cpuUtil
+		self.diskUtil = data.diskUtil
+		self.memUtil = data.memUtil

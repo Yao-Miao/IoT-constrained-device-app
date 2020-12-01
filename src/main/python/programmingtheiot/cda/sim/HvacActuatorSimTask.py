@@ -12,6 +12,7 @@ import random
 
 from programmingtheiot.data.ActuatorData import ActuatorData
 from programmingtheiot.cda.sim.BaseActuatorSimTask import BaseActuatorSimTask
+import programmingtheiot.common.ConfigConst as ConfigConst
 
 class HvacActuatorSimTask(BaseActuatorSimTask):
 	"""
@@ -24,7 +25,7 @@ class HvacActuatorSimTask(BaseActuatorSimTask):
 		Initialization of class.
 		Create an instance of HvacActuatorSimTask
 		"""
-		super(HvacActuatorSimTask, self).__init__(actuatorType = ActuatorData.HVAC_ACTUATOR_TYPE, simpleName = "HVAC")
+		super(HvacActuatorSimTask, self).__init__(actuatorType = ActuatorData.HVAC_ACTUATOR_TYPE, simpleName = "HVAC", actuatorName = ConfigConst.HVAC_ACTUATOR_NAME)
 		
 	def activateActuator(self, val: float) -> bool:
 		"""

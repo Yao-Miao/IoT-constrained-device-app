@@ -11,6 +11,7 @@ import logging
 import random
 
 from programmingtheiot.data.ActuatorData import ActuatorData
+import programmingtheiot.common.ConfigConst as ConfigConst
 
 class BaseActuatorSimTask():
 	"""
@@ -18,14 +19,14 @@ class BaseActuatorSimTask():
 	
 	"""
 
-	def __init__(self, actuatorType: int = ActuatorData.DEFAULT_ACTUATOR_TYPE, simpleName: str = "Actuator"):
+	def __init__(self, actuatorType: int = ActuatorData.DEFAULT_ACTUATOR_TYPE, simpleName: str = "Actuator", actuatorName = ConfigConst.NOT_SET):
 		"""
 		Initialization of class.
 		Create an instance of BaseActuatorSimTask
 		"""
-		self.__actuatorType = actuatorType
-		self.__simpleName = simpleName
-		self.__latestAd = ActuatorData()
+		self.actuatorType = actuatorType
+		self.simpleName = simpleName
+		self.latestAd = ActuatorData(name=actuatorName)
 		
 	def activateActuator(self, val: float) -> bool:
 		"""
@@ -38,7 +39,7 @@ class BaseActuatorSimTask():
 		print('* O N *')
 		print('*******')
 		print(self.getActuatorTypeName() + ' VALUE -> ' + str(val))
-		self.__latestAd.setCommand(ActuatorData.COMMAND_ON)
+		self.latestAd.setCommand(ActuatorData.COMMAND_ON)
 		return True
 		
 	def deactivateActuator(self) -> bool:
@@ -51,7 +52,7 @@ class BaseActuatorSimTask():
 		print('*******')
 		print('* OFF *') 
 		print('*******')
-		self.__latestAd.setCommand(ActuatorData.COMMAND_OFF)
+		self.latestAd.setCommand(ActuatorData.COMMAND_OFF)
 		return True
 	
 	def getActuatorType(self):
@@ -60,7 +61,7 @@ class BaseActuatorSimTask():
 		
 		@return str
 		"""
-		return self.__actuatorType
+		return self.actuatorType
 	
 	def getLatestActuatorResponse(self) -> ActuatorData:
 		"""
@@ -68,7 +69,7 @@ class BaseActuatorSimTask():
 		
 		@return ActuatorData
 		"""
-		return self.__latestAd
+		return self.latestAd
 	
 	def getSimpleName(self) -> str:
 		"""
@@ -76,7 +77,7 @@ class BaseActuatorSimTask():
 		
 		@return str
 		"""
-		return self.__simpleName
+		return self.simpleName
 	
 	def updateActuator(self, data: ActuatorData) -> bool:
 		"""
@@ -89,9 +90,9 @@ class BaseActuatorSimTask():
 				self.activateActuator(data.getValue())
 			else :
 				self.deactivateActuator()
-			self.__latestAd._handleUpdateData(data)
+			self.latestAd._handleUpdateData(data)
 		
-		self.__latestAd.setAsResponse()
+		self.latestAd.setAsResponse()
 		return True
 	
 	def getActuatorTypeName(self):
@@ -100,9 +101,9 @@ class BaseActuatorSimTask():
 		
 		@return str
 		"""
-		if self.__actuatorType == 1:
+		if self.actuatorType == 1:
 			return 'HVAC'
-		if self.__actuatorType == 2:
+		if self.actuatorType == 2:
 			return 'HUMIDIFIER'
 		return 'Unknown'
 		

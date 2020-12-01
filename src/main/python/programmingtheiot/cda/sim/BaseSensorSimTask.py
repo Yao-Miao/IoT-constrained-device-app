@@ -11,6 +11,7 @@ import logging
 import random
 
 from programmingtheiot.data.SensorData import SensorData
+import programmingtheiot.common.ConfigConst as ConfigConst
 
 class BaseSensorSimTask():
 	"""
@@ -21,24 +22,25 @@ class BaseSensorSimTask():
 	DEFAULT_MIN_VAL = 0.0
 	DEFAULT_MAX_VAL = 1000.0
 	
-	def __init__(self, sensorType: int = SensorData.DEFAULT_SENSOR_TYPE, dataSet = None, minVal: float = DEFAULT_MIN_VAL, maxVal: float = DEFAULT_MAX_VAL):
+	def __init__(self, sensorType: int = SensorData.DEFAULT_SENSOR_TYPE, dataSet = None, minVal: float = DEFAULT_MIN_VAL, maxVal: float = DEFAULT_MAX_VAL, sensorName = ConfigConst.NOT_SET):
 		"""
 		Initialization of class.
 		Create an instance of BaseSensorSimTask
 		"""
-		self.__sensorType = sensorType
-		self.__minVal = minVal
-		self.__maxVal = maxVal
-		self.__index = -1
-		self.__latestSd = None
+		self.sensorName = sensorName
+		self.sensorType = sensorType
+		self.minVal = minVal
+		self.maxVal = maxVal
+		self.index = -1
+		self.latestSd = None
 		
 		
 		if dataSet:
-			self.__dataSet = dataSet.dataEntries
-			self.__useRandomizer = False
+			self.dataSet = dataSet.dataEntries
+			self.useRandomizer = False
 		else:
-			self.__dataSet = None
-			self.__useRandomizer = True
+			self.dataSet = None
+			self.useRandomizer = True
 		
 	def generateTelemetry(self) -> SensorData:
 		"""
@@ -46,16 +48,16 @@ class BaseSensorSimTask():
 		
 		@return SensorData
 		"""
-		sd = SensorData(sensorType = self.__sensorType)
+		sd = SensorData(sensorType = self.sensorType, name = self.sensorName)
 		
-		if self.__useRandomizer:
-			randomVal = random.uniform(self.__minVal, self.__maxVal)
+		if self.useRandomizer:
+			randomVal = random.uniform(self.minVal, self.maxVal)
 			sd.setValue(randomVal)
 		else:
-			self.__index += 1
-			if self.__index >= len(self.__dataSet):
-				self.__index = 0
-			data = self.__dataSet[self.__index]
+			self.index += 1
+			if self.index >= len(self.dataSet):
+				self.index = 0
+			data = self.dataSet[self.index]
 			sd.setValue(data)
 		return sd
 		
@@ -67,8 +69,8 @@ class BaseSensorSimTask():
 		
 		@return float
 		"""
-		if self.__latestSd:
-			value = self.__latestSd.getValue()
+		if self.latestSd:
+			value = self.latestSd.getValue()
 			return value
 		else:
 			sd = self.generateTelemetry()

@@ -45,11 +45,16 @@ class DeviceDataManager(IDataMessageListener):
 		
 		self.enableEmulator = self.configUtil.getBoolean(ConfigConst.CONSTRAINED_DEVICE, ConfigConst.ENABLE_EMULATOR_KEY)
 		
+		self.enableRedis = False
+		
 		self.sysPerfManager = SystemPerformanceManager()
-		self.sensorAdapterManager = SensorAdapterManager()
-		self.actuatorAdapterManager = ActuatorAdapterManager()
+		self.sensorAdapterManager = SensorAdapterManager(useEmulator=self.enableEmulator)
+		self.sensorAdapterManager.setDataMessageListener(self)
+		self.actuatorAdapterManager = ActuatorAdapterManager(useEmulator=self.enableEmulator)
+		self.actuatorAdapterManager.setDataMessageListener(self)
 		##add by miaoyao @10/30/2020
-		self.redisClient = RedisPersistenceAdapter()
+		if self.enableRedis:
+			self.redisClient = RedisPersistenceAdapter()
 		
 		self.enableHandleTempChangeOnDevice = self.configUtil.getBoolean(ConfigConst.CONSTRAINED_DEVICE, ConfigConst.ENABLE_HANDLE_TEMP_CHANGE_ON_DEVICE_KEY)
 
@@ -58,9 +63,14 @@ class DeviceDataManager(IDataMessageListener):
 		self.triggerHvacTempCeiling = self.configUtil.getFloat(ConfigConst.CONSTRAINED_DEVICE, ConfigConst.TRIGGER_HVAC_TEMP_CEILING_KEY);
 		
 		##add by miaoyao @11/02/2020
-		self.enableMqtt = self.configUtil.getBoolean(ConfigConst.CONSTRAINED_DEVICE, ConfigConst.ENABLE_MQTT_KEY)
+		##self.enableMqtt = self.configUtil.getBoolean(ConfigConst.CONSTRAINED_DEVICE, ConfigConst.ENABLE_MQTT_KEY)
+		self.enableMqtt = enableMqtt
+		self.enableCoap = enableCoap
+		
 		if self.enableMqtt:
 			self.mqttClient = MqttClientConnector()
+		if self.enableCoap:
+			self.coapClient = CoapClientConnector()
 		
 		
 		
@@ -71,10 +81,27 @@ class DeviceDataManager(IDataMessageListener):
 		
 		@return bool
 		"""
-		logging.info("----->>>The handleActuatorCommandResponse method is being called")
+		
 		# Use the DataUtil class to convert the ActuatorData to JSON.
 		adJson= DataUtil.actuatorDataToJson(self, data)
 		self._handleUpstreamTransmission(ResourceNameEnum.CDA_ACTUATOR_RESPONSE_RESOURCE, adJson)
+		
+	def handleActuatorCommandMessage(self, data: ActuatorData) -> bool:
+		"""
+		handle the handleActuatorCommandMessage
+		
+		@return bool
+		"""
+		if data:
+			logging.info("Processing actuator command message.")
+			
+			# TODO: add further validation before sending the command
+			self.actuatorAdapterManager.sendActuatorCommand(data)
+			return True
+		else:
+			logging.warning("Received invalid ActuatorData command message. Ignoring.")
+			return False
+		
 	
 	def handleIncomingMessage(self, resourceEnum: ResourceNameEnum, msg: str) -> bool:
 		"""
@@ -98,7 +125,11 @@ class DeviceDataManager(IDataMessageListener):
 		sdJosn = DataUtil.sensorDataToJson(self, data)
 		self._handleUpstreamTransmission(ResourceNameEnum.CDA_SENSOR_MSG_RESOURCE, sdJosn)
 		self._handleSensorDataAnalysis(data)
-		self.redisClient.storeData(ResourceNameEnum.CDA_SENSOR_MSG_RESOURCE, data)
+		
+		
+		
+		if self.enableRedis:
+			self.redisClient.storeData(ResourceNameEnum.CDA_SENSOR_MSG_RESOURCE, data)
 		
 	def handleSystemPerformanceMessage(self, data: SystemPerformanceData) -> bool:
 		"""
@@ -120,7 +151,9 @@ class DeviceDataManager(IDataMessageListener):
 		logging.info("----->>>The DeviceDataManager will be started")
 		self.sysPerfManager.startManager()
 		self.sensorAdapterManager.startManager()
-		self.redisClient.connectClient()
+		if self.enableRedis:
+			self.redisClient.connectClient()
+		
 		if self.enableMqtt:
 			self.mqttClient.connectClient()
 		
@@ -133,7 +166,9 @@ class DeviceDataManager(IDataMessageListener):
 		"""
 		self.sysPerfManager.stopManager()
 		self.sensorAdapterManager.stopManager()
-		self.redisClient.disconnectClient()
+		
+		if self.enableRedis:
+			self.redisClient.disconnectClient()
 		if self.enableMqtt:
 			self.mqttClient.disconnectClient()
 		
@@ -184,5 +219,8 @@ class DeviceDataManager(IDataMessageListener):
 		if self.enableMqtt:
 			if resourceName == ResourceNameEnum.CDA_SENSOR_MSG_RESOURCE or resourceName == ResourceNameEnum.CDA_SYSTEM_PERF_MSG_RESOURCE:
 				self.mqttClient.publishMessage(resourceName, msg)
+		
+		if self.enableCoap:
+			self.coapClient.sendPostRequest(resource = resourceName, enableCON = True, payload = msg)
 				
 			
