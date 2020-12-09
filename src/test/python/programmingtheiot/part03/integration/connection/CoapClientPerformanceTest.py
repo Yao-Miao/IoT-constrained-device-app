@@ -64,5 +64,7 @@ class CoapClientPerformanceTest(unittest.TestCase):
             
         endTime = time.time_ns()
         elapsedMillis = (endTime - startTime) / self.NS_IN_MILLIS
-        
-        print("POST message - useCON = " + str(useCon) + " [" + str(maxTestRuns) + "]: " + str(elapsedMillis) + " ms")
+        if useCon :
+            print("POST message - useCON = " + str(useCon) + " [" + str(maxTestRuns) + "]: " + str(elapsedMillis) + " ms")
+        else:
+            print("POST message - useNON = " + str(useCon) + " [" + str(maxTestRuns) + "]: " + str(elapsedMillis) + " ms")

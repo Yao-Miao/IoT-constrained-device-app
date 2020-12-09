@@ -22,7 +22,7 @@ class MqttClientPerformanceTest(unittest.TestCase):
     NS_IN_MILLIS = 1000000
     
     # NOTE: We'll use only 10,000 requests for MQTT
-    MAX_TEST_RUNS = 10000
+    MAX_TEST_RUNS = 100000
     
     @classmethod
     def setUpClass(self):
@@ -52,18 +52,16 @@ class MqttClientPerformanceTest(unittest.TestCase):
     
     """
     Test publish
-    """    
+    """
     #@unittest.skip("Ignore for now.")
-    def testPublishQoS0(self):
-        self._execTestPublish(self.MAX_TEST_RUNS, 0)
-
+    def testPublishQoS2(self):
+        self._execTestPublish(self.MAX_TEST_RUNS, 2)    
     #@unittest.skip("Ignore for now.")
     def testPublishQoS1(self):
         self._execTestPublish(self.MAX_TEST_RUNS, 1)
-
     #@unittest.skip("Ignore for now.")
-    def testPublishQoS2(self):
-        self._execTestPublish(self.MAX_TEST_RUNS, 2)
+    def testPublishQoS0(self):
+        self._execTestPublish(self.MAX_TEST_RUNS, 0)    
 
     def _execTestPublish(self, maxTestRuns: int, qos: int):
         self.assertTrue(self.mqttClient.connectClient())
