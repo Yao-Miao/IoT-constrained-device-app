@@ -2,48 +2,42 @@
 
 ## Lab Module 12 - Semester Project - CDA Components
 
-Be sure to implement all the PIOT-CDA-* issues (requirements) listed at [PIOT-INF-10-001 - Chapter 10](https://github.com/orgs/programming-the-iot/projects/1#column-10488510).
-
 ### Description
-
-NOTE: Include two full paragraphs describing your implementation approach by answering the questions listed below.
 
 What does your implementation do? 
 
+1.	Connect to the GDA using MQTT and  CoAP
+2.	Collect and send system performance data for CPU and memory to the GDA
+3.	Collect data from 4 sensors (emulated) and send to the GDA
+4.	Use data from sensors to trigger a local (internal) actuation event due to a configured threshold crossing
+5.	Implement 2 actuators (emulated)
+6.	Process actuation events received from the GDA to trigger 1 actuation event
+7.	Run for at least 1 hour without interruption, and collect / send at least 30 system performance samples, 30 sensor data samples, and trigger at least 2 actuator events internally.
+
+
 How does your implementation work?
 
-### Code Repository and Branch
+1.	Create sensor task: SoilHumiditySensorEmulatorTask
+2.	Create actuator emulator task: SprinklerCtrlEmulatorTask and SprinklerEmulatorTask
+3.	Update DeviceDataManager class in order to send data to the GDA and receive actuation events from GDA
+4.	Update _handleSensorDataAnalysis method
 
-NOTE: Be sure to include the branch (e.g. https://github.com/programming-the-iot/python-components/tree/alpha001).
+### Code Repository and Branch
 
 URL: 
 
 ### UML Design Diagram(s)
 
-NOTE: Include one or more UML designs representing your solution. It's expected each
-diagram you provide will look similar to, but not the same as, its counterpart in the
 book [Programming the IoT](https://learning.oreilly.com/library/view/programming-the-internet/9781492081401/).
 
 
 ### Unit Tests Executed
-
-NOTE: TA's will execute your unit tests. You only need to list each test case below
-(e.g. ConfigUtilTest, DataUtilTest, etc). Be sure to include all previous tests, too,
-since you need to ensure you haven't introduced regressions.
-
-- 
-- 
-- 
+ 
 
 ### Integration Tests Executed
 
-NOTE: TA's will execute most of your integration tests using their own environment, with
-some exceptions (such as your cloud connectivity tests). In such cases, they'll review
-your code to ensure it's correct. As for the tests you execute, you only need to list each
-test case below (e.g. SensorSimAdapterManagerTest, DeviceDataManagerTest, etc.)
-
-- 
-- 
-- 
+- SensorEmulatorManagerTest
+- SensorEmulatorManagerTest
+- DeviceDataManagerTest 
 
 EOF.
