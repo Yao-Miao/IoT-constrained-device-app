@@ -28,7 +28,7 @@ URL:
 
 ### UML Design Diagram(s)
 
-book [Programming the IoT](https://learning.oreilly.com/library/view/programming-the-internet/9781492081401/).
+![CDA_UML](https://github.com/NU-CSYE6530-Fall2020/constrained-device-app-MyronForNEU/blob/chapter12/exercises/chapter12/CDA.png).
 
 
 ### Unit Tests Executed
