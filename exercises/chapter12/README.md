@@ -41,7 +41,6 @@ URL: https://github.com/NU-CSYE6530-Fall2020/constrained-device-app-MyronForNEU/
 - DeviceDataManagerTest 
 
 ### Cloud Service
-
-
+![CDA_CLOUD](https://github.com/NU-CSYE6530-Fall2020/constrained-device-app-MyronForNEU/blob/chapter12/exercises/chapter12/CDA_Cloud.jpg)
 
 EOF.
