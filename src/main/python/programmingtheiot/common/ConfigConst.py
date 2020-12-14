@@ -125,6 +125,11 @@ ENABLE_HANDLE_TEMP_CHANGE_ON_DEVICE_KEY = 'enableHandleTempChangeOnDevice'
 TRIGGER_HVAC_TEMP_FLOOR_KEY = 'triggerHvacTempFloor'
 TRIGGER_HVAC_TEMP_CEILING_KEY = 'triggerHvacTempCeiling'
 
+##add by miaoyao for final project
+ENABLE_HANDLE_SOIL_HUMIDITY_CHANGE_ON_DEVICE_KEY = 'enableHandleSoilHumidityChangeOnDevice'
+TRIGGER_WATER_SOIL_HUMI_FLOOR_KEY = 'triggerWaterDeviceHumiFloor'
+TRIGGER_WATER_SOIL_HUMI_CEILING_KEY = 'triggerWaterDeviceHumiCeiling'
+
 
 
 
@@ -135,6 +140,7 @@ HVAC_ACTUATOR_NAME = 'HvacActuator'
 HUMIDITY_SENSOR_NAME = 'HumiditySensor'
 PRESSURE_SENSOR_NAME = 'PressureSensor'
 TEMP_SENSOR_NAME = 'TempSensor'
+SOIL_HUMIDITY_SENSOR_NAME = 'SoilHumiditySensor'
 
 SYS_PERF_DATA = 'SysPerfData'
 

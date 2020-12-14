@@ -53,6 +53,19 @@ class ActuatorAdapterManager(object):
 			ledClazz = getattr(ledModule, 'LedDisplayEmulatorTask')
 			self.ledEmulator = ledClazz()
 			
+			
+			sprinklerModule = __import__('programmingtheiot.cda.emulated.SprinklerEmulatorTask', fromlist = ['SprinklerEmulatorTask'])
+			sprClazz = getattr(sprinklerModule, 'SprinklerEmulatorTask')
+			self.sprinklerEmulator = sprClazz()
+			
+			sprCtrlModule = __import__('programmingtheiot.cda.emulated.SprinklerCtrlEmulatorTask', fromlist = ['SprinklerCtrlEmulatorTask'])
+			sprCtrlClazz = getattr(sprCtrlModule, 'SprinklerCtrlEmulatorTask')
+			self.sprCtrlEmulator = sprCtrlClazz()
+			
+			
+			
+
+			
 		else:
 			logging.info("---> Simulators will be used ")
 			# create the humidifier actuator
@@ -80,6 +93,12 @@ class ActuatorAdapterManager(object):
 				if (data.getActuatorType() == ActuatorData.LED_DISPLAY_ACTUATOR_TYPE):
 					if ~data.isResponseFlagEnabled(): 
 						self.ledEmulator._handleActuation(data.getCommand(), data.getValue(), data.getStateData())
+				if (data.getActuatorType() == ActuatorData.SPRINKLER_ACTUATOR_TYPE):
+					if ~data.isResponseFlagEnabled(): 
+						self.sprinklerEmulator._handleActuation(data.getCommand(), data.getValue(), data.getStateData())
+				if (data.getActuatorType() == ActuatorData.SPRINKLER_CTRL_ACTUATOR_TYPE):
+					if ~data.isResponseFlagEnabled(): 
+						self.sprCtrlEmulator._handleActuation(data.getCommand(), data.getValue(), data.getStateData())
 			else:
 				if (data.getActuatorType() == ActuatorData.HUMIDIFIER_ACTUATOR_TYPE):
 					if ~data.isResponseFlagEnabled(): 
@@ -87,7 +106,7 @@ class ActuatorAdapterManager(object):
 				if (data.getActuatorType() == ActuatorData.HVAC_ACTUATOR_TYPE):
 					if ~data.isResponseFlagEnabled(): 
 						self.hvacActuator.updateActuator(data)
-						
+		
 			
 	
 	def setDataMessageListener(self, listener: IDataMessageListener) -> bool:

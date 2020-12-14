@@ -50,7 +50,7 @@ class DeviceDataManagerWithCommsTest(unittest.TestCase):
 		ddMgr = DeviceDataManager(enableMqtt = True, enableCoap = False)
 		ddMgr.startManager()
 		
-		sleep(30)
+		sleep(600)
 		
 		ddMgr.stopManager()
 
@@ -63,16 +63,16 @@ class DeviceDataManagerWithCommsTest(unittest.TestCase):
 		
 		ddMgr.stopManager()
 
-	@unittest.skip("Ignore for now.")
+	#@unittest.skip("Ignore for now.")
 	def testStartAndStopManagerWithMqttAndCoap(self):
 		ddMgr = DeviceDataManager(enableMqtt = True, enableCoap = True)
 		ddMgr.startManager()
 		
-		sleep(30)
+		sleep(60000)
 		
 		ddMgr.stopManager()
 	
-	#@unittest.skip("Ignore for now.")
+	@unittest.skip("Ignore for now.")
 	def testDeviceDataManagerIntegration(self):
 		# TODO: set either MQTT or CoAP to True - you'll only need one.
 		ddMgr = DeviceDataManager(enableMqtt = True, enableCoap = False)

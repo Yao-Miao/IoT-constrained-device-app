@@ -15,6 +15,7 @@ from programmingtheiot.common.IDataMessageListener import IDataMessageListener
 
 from programmingtheiot.cda.system.SystemCpuUtilTask import SystemCpuUtilTask
 from programmingtheiot.cda.system.SystemMemUtilTask import SystemMemUtilTask
+from programmingtheiot.data.SystemPerformanceData import SystemPerformanceData
 
 class SystemPerformanceManager(object):
 	"""
@@ -33,6 +34,8 @@ class SystemPerformanceManager(object):
 		self.memUtilTask = SystemMemUtilTask()
 		self.scheduler = BackgroundScheduler()
 		self.scheduler.add_job(self.handleTelemetry, 'interval', seconds = pollRate)
+		
+		self.dataMsgListener = None
 									
 
 	def handleTelemetry(self):
@@ -41,13 +44,34 @@ class SystemPerformanceManager(object):
 		Logs the values of self.cpuUtilPct and self.memUtilPct
 		
 		"""
+		
 		self.cpuUtilPct = self.cpuUtilTask.getTelemetryValue()
 		self.memUtilPct = self.memUtilTask.getTelemetryValue()
+		
+		cpuUtilSd = self.cpuUtilTask.generateTelemetry()
+		memUtilSd = self.memUtilTask.generateTelemetry()
+		
+		##add by miaoyao in order to send SystemPerformanceData to gda instead of cpuUtilSd and memUtilSd
+		systemPerformanceData = SystemPerformanceData()
+		systemPerformanceData.setCpuUtilization(self.cpuUtilPct)
+		systemPerformanceData.setMemoryUtilization(self.memUtilPct)
+		
+		
+		
+		
+		
+		
+		##--add call back function to handle system information
+		if self.dataMsgListener :
+			##self.dataMsgListener.handleSystemPerformanceMessage(cpuUtilSd)
+			##self.dataMsgListener.handleSystemPerformanceMessage(memUtilSd)
+			self.dataMsgListener.handleSystemPerformanceMessage(systemPerformanceData)
 		
 		logging.info('CPU utilization is %s percent, and memory utilization is %s percent.', str(self.cpuUtilPct), str(self.memUtilPct))
 		
 	def setDataMessageListener(self, listener: IDataMessageListener) -> bool:
-		pass
+		if listener:
+			self.dataMsgListener = listener
 	
 	def startManager(self):
 		"""

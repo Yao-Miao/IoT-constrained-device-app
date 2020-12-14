@@ -74,6 +74,12 @@ class SensorAdapterManager(object):
 				temperatureModule = __import__('programmingtheiot.cda.emulated.TemperatureSensorEmulatorTask', fromlist = ['TemperatureSensorEmulatorTask'])
 				teClazz = getattr(temperatureModule, 'TemperatureSensorEmulatorTask')
 				self.temperatureEmulator =teClazz()
+				
+				##add by miaoyao for final project
+				soilHumidityModule = __import__('programmingtheiot.cda.emulated.SoilHumiditySensorEmulatorTask', fromlist = ['SoilHumiditySensorEmulatorTask'])
+				shClazz = getattr(soilHumidityModule, 'SoilHumiditySensorEmulatorTask')
+				self.soilHumidityEmulator = shClazz()
+				
 
 			
 		else:
@@ -121,6 +127,7 @@ class SensorAdapterManager(object):
 				humiditySd = self.humidityEmulator.generateTelemetry()
 				pressureSd = self.pressureEmulator.generateTelemetry()
 				tempSd = self.temperatureEmulator .generateTelemetry()
+				soilHumiditySd = self.soilHumidityEmulator.generateTelemetry()
 		else :
 			
 			humiditySd = self.humiditySensorSimTask.generateTelemetry()
@@ -131,9 +138,10 @@ class SensorAdapterManager(object):
 			self.dataMsgListener.handleSensorMessage(humiditySd)
 			self.dataMsgListener.handleSensorMessage(pressureSd)
 			self.dataMsgListener.handleSensorMessage(tempSd)
+			self.dataMsgListener.handleSensorMessage(soilHumiditySd)
 		
 		
-		logging.info(' >>>>>>>>> Humidity is < %s >,  Pressure is < %s >,  Temperature is < %s >.', str(humiditySd.getValue()), str(pressureSd.getValue()), str(tempSd.getValue()))
+		logging.info(' >>>>>>>>> Humidity is < %s >,  SoilHumidity is <%s>,  Pressure is < %s >,  Temperature is < %s >.', str(humiditySd.getValue()), str(soilHumiditySd.getValue()), str(pressureSd.getValue()), str(tempSd.getValue()))
 		
 	def setDataMessageListener(self, listener: IDataMessageListener) -> bool:
 		"""

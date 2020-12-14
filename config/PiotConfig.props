@@ -33,7 +33,7 @@ enableCrypt    = False
 # CDA specific configuration information
 #
 [ConstrainedDevice]
-enableEmulator  = False
+enableEmulator  = True
 enableSenseHAT  = False
 enableLogging   = True
 enableMqtt		= True
@@ -50,9 +50,13 @@ tempSimFloor       = 18
 tempSimCeiling     = 22
 
 # configurable limits for actuator triggers
-enableHandleTempChangeOnDevice = True
+enableHandleTempChangeOnDevice = False
 triggerHvacTempFloor = 16
 triggerHvacTempCeiling = 23
+
+enableHandleSoilHumidityChangeOnDevice = True
+triggerWaterDeviceHumiFloor = 35
+triggerWaterDeviceHumiCeiling = 50
 
 #
 # Persistence client configuration information

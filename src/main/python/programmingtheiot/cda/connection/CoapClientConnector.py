@@ -160,7 +160,7 @@ class CoapClientConnector(IRequestResponseClient):
 	Set the Data Message Listener
 	"""
 	def setDataMessageListener(self, listener: IDataMessageListener) -> bool:
-		self.dataMsgListener = IDataMessageListener
+		self.dataMsgListener = listener
 
 	def startObserver(self, resource: ResourceNameEnum, ttl: int = IRequestResponseClient.DEFAULT_TTL) -> bool:
 		pass
@@ -204,7 +204,7 @@ class CoapClientConnector(IRequestResponseClient):
 	"""
 	def _onGetResponse(self, response):
 		
-		logging.info('GET response received.')
+		logging.info('[COAP_CALLBACK] GET response received.')
 
 		if response:
 			logging.info('Token: ' + str(response.token))
@@ -216,10 +216,11 @@ class CoapClientConnector(IRequestResponseClient):
 			#
 	
 			# TODO: get the URI and convert to ResourceNameEnum
-			resource = None
-	
-			if self.dataMsgListener:
-				self.dataMsgListener.handleIncomingMessage(resource, str(response.payload))
+			resource = ResourceNameEnum.CDA_ACTUATOR_CMD_RESOURCE
+			msg = str(response.payload);
+			
+			if self.dataMsgListener and response.payload:
+				self.dataMsgListener.handleIncomingMessage(resource, msg)
 
 	"""
 	Callback function for sendPutRequest()

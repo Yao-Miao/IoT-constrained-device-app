@@ -48,6 +48,7 @@ class DeviceDataManager(IDataMessageListener):
 		self.enableRedis = False
 		
 		self.sysPerfManager = SystemPerformanceManager()
+		self.sysPerfManager.setDataMessageListener(self)
 		self.sensorAdapterManager = SensorAdapterManager(useEmulator=self.enableEmulator)
 		self.sensorAdapterManager.setDataMessageListener(self)
 		self.actuatorAdapterManager = ActuatorAdapterManager(useEmulator=self.enableEmulator)
@@ -55,12 +56,22 @@ class DeviceDataManager(IDataMessageListener):
 		##add by miaoyao @10/30/2020
 		if self.enableRedis:
 			self.redisClient = RedisPersistenceAdapter()
+			
 		
 		self.enableHandleTempChangeOnDevice = self.configUtil.getBoolean(ConfigConst.CONSTRAINED_DEVICE, ConfigConst.ENABLE_HANDLE_TEMP_CHANGE_ON_DEVICE_KEY)
 
 		self.triggerHvacTempFloor = self.configUtil.getFloat(ConfigConst.CONSTRAINED_DEVICE, ConfigConst.TRIGGER_HVAC_TEMP_FLOOR_KEY);
 
 		self.triggerHvacTempCeiling = self.configUtil.getFloat(ConfigConst.CONSTRAINED_DEVICE, ConfigConst.TRIGGER_HVAC_TEMP_CEILING_KEY);
+		##add by miaoyao for final project
+		
+		self.enableHandleSoilHumidityChangeOnDevice = self.configUtil.getBoolean(ConfigConst.CONSTRAINED_DEVICE, ConfigConst.ENABLE_HANDLE_SOIL_HUMIDITY_CHANGE_ON_DEVICE_KEY)
+
+		self.triggerWaterDeviceHumiFloor = self.configUtil.getFloat(ConfigConst.CONSTRAINED_DEVICE, ConfigConst.TRIGGER_WATER_SOIL_HUMI_FLOOR_KEY);
+
+		self.triggerWaterDeviceHumiCeiling = self.configUtil.getFloat(ConfigConst.CONSTRAINED_DEVICE, ConfigConst.TRIGGER_WATER_SOIL_HUMI_CEILING_KEY);
+		
+		
 		
 		##add by miaoyao @11/02/2020
 		##self.enableMqtt = self.configUtil.getBoolean(ConfigConst.CONSTRAINED_DEVICE, ConfigConst.ENABLE_MQTT_KEY)
@@ -69,8 +80,10 @@ class DeviceDataManager(IDataMessageListener):
 		
 		if self.enableMqtt:
 			self.mqttClient = MqttClientConnector()
+			self.mqttClient.setDataMessageListener(self);
 		if self.enableCoap:
 			self.coapClient = CoapClientConnector()
+			self.coapClient.setDataMessageListener(self)
 		
 		
 		
@@ -83,6 +96,7 @@ class DeviceDataManager(IDataMessageListener):
 		"""
 		
 		# Use the DataUtil class to convert the ActuatorData to JSON.
+		logging.info("[CDA_CALLBACK]----->>>The handleActuatorCommandResponse method is being called")
 		adJson= DataUtil.actuatorDataToJson(self, data)
 		self._handleUpstreamTransmission(ResourceNameEnum.CDA_ACTUATOR_RESPONSE_RESOURCE, adJson)
 		
@@ -92,6 +106,7 @@ class DeviceDataManager(IDataMessageListener):
 		
 		@return bool
 		"""
+		logging.info("[CDA_CALLBACK]----->>>The handleActuatorCommandMessage method is being called")
 		if data:
 			logging.info("Processing actuator command message.")
 			
@@ -109,7 +124,7 @@ class DeviceDataManager(IDataMessageListener):
 		
 		@return bool
 		"""
-		logging.info("----->>>The handleIncomingMessage method is being called")
+		logging.info("[CDA_CALLBACK]----->>>The handleIncomingMessage method is being called")
 		# Use the DataUtil class to convert the msg content (which should be JSON) to an ActuatorData instance
 		ad = DataUtil.jsonToActuatorData(self, msg)
 		self._handleIncomingDataAnalysis(msg)
@@ -120,7 +135,7 @@ class DeviceDataManager(IDataMessageListener):
 		
 		@return bool
 		"""
-		logging.info("----->>>The handleSensorMessage method is being called")
+		logging.info("[CDA_CALLBACK]----->>>The handleSensorMessage method is being called")
 		# Use the DataUtil class to convert the SensorData to JSON
 		sdJosn = DataUtil.sensorDataToJson(self, data)
 		self._handleUpstreamTransmission(ResourceNameEnum.CDA_SENSOR_MSG_RESOURCE, sdJosn)
@@ -137,7 +152,7 @@ class DeviceDataManager(IDataMessageListener):
 		
 		@return bool
 		"""
-		logging.info("----->>>The handleSystemPerformanceMessage method is being called")
+		logging.info("[CDA_CALLBACK]----->>>The handleSystemPerformanceMessage method is being called")
 		spmJson = DataUtil.systemPerformanceDataToJson(self, data)
 		self._handleUpstreamTransmission(ResourceNameEnum.CDA_SYSTEM_PERF_MSG_RESOURCE, spmJson)
 	
@@ -156,6 +171,8 @@ class DeviceDataManager(IDataMessageListener):
 		
 		if self.enableMqtt:
 			self.mqttClient.connectClient()
+		
+		
 		
 	def stopManager(self):
 		"""
@@ -184,7 +201,7 @@ class DeviceDataManager(IDataMessageListener):
 		2) Convert msg: Use DataUtil to convert if appropriate.
 		3) Act on msg: Determine what - if any - action is required, and execute.
 		"""
-		logging.info("----->>>The _handleIncomingDataAnalysis method is being called")
+		logging.info("[CDA_CALLBACK]----->>>The _handleIncomingDataAnalysis method is being called")
 		ad = DataUtil.jsonToActuatorData(self, msg)
 		self.actuatorAdapterManager.sendActuatorCommand(ad)
 		
@@ -196,8 +213,9 @@ class DeviceDataManager(IDataMessageListener):
 		1) Check config: Is there a rule or flag that requires immediate processing of data?
 		2) Act on data: If # 1 is true, determine what - if any - action is required, and execute.
 		"""
-		logging.info("----->>>The _handleSensorDataAnalysis method is being called")
-		if self.enableHandleTempChangeOnDevice:
+		logging.info("[CDA_CALLBACK]----->>>The _handleSensorDataAnalysis method is being called")
+		if self.enableHandleTempChangeOnDevice and data.getSensorType() == SensorData.TEMP_SENSOR_TYPE:
+
 			ad = ActuatorData(actuatorType = ActuatorData.HVAC_ACTUATOR_TYPE)
 			value = data.getValue()
 			if value >= self.triggerHvacTempFloor and value <= self.triggerHvacTempCeiling:
@@ -208,6 +226,26 @@ class DeviceDataManager(IDataMessageListener):
 			self.actuatorAdapterManager.sendActuatorCommand(ad)
 			
 		
+		if self.enableHandleSoilHumidityChangeOnDevice and data.getSensorType() == SensorData.SOIL_HUMIDITY_SENSOR_TYPE:
+			
+			ad = ActuatorData(actuatorType = ActuatorData.SPRINKLER_ACTUATOR_TYPE)
+			value = data.getValue()
+			if value >= self.triggerWaterDeviceHumiCeiling: 
+				ad.setCommand(ActuatorData.COMMAND_OFF)
+				self.actuatorAdapterManager.sendActuatorCommand(ad)
+			elif value<= self.triggerWaterDeviceHumiFloor:
+				ad.setCommand(ActuatorData.COMMAND_ON)
+				self.actuatorAdapterManager.sendActuatorCommand(ad)
+				self.coapClient.sendGetRequest(ResourceNameEnum.CDA_ACTUATOR_CMD_RESOURCE, False, 5)
+			else :
+				self.coapClient.sendGetRequest(ResourceNameEnum.CDA_ACTUATOR_CMD_RESOURCE, False, 5)
+			
+			
+			
+			
+		
+			
+		
 	def _handleUpstreamTransmission(self, resourceName: ResourceNameEnum, msg: str):
 		"""
 		Call this from handleActuatorCommandResponse(), handlesensorMessage(), and handleSystemPerformanceMessage()
@@ -215,12 +253,14 @@ class DeviceDataManager(IDataMessageListener):
 		1) Check connection: Is there a client connection configured (and valid) to a remote MQTT or CoAP server?
 		2) Act on msg: If # 1 is true, send message upstream using one (or both) client connections.
 		"""
-		logging.info("----->>>The _handleUpstreamTransmission method is being called")
+		logging.info("[callback]----->>>The _handleUpstreamTransmission method is being called")
 		if self.enableMqtt:
-			if resourceName == ResourceNameEnum.CDA_SENSOR_MSG_RESOURCE or resourceName == ResourceNameEnum.CDA_SYSTEM_PERF_MSG_RESOURCE:
-				self.mqttClient.publishMessage(resourceName, msg)
+			self.mqttClient.publishMessage(resourceName, msg)
 		
+		"""
 		if self.enableCoap:
 			self.coapClient.sendPostRequest(resource = resourceName, enableCON = True, payload = msg)
+		"""
+			
 				
 			

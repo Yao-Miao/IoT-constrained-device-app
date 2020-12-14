@@ -41,8 +41,8 @@ class CoapClientConnectorTest(unittest.TestCase):
 
 	def tearDown(self):
 		self.coapClient.stopObserver(1)
-		sleep(1)
-
+		sleep(1)	
+	
 	@unittest.skip("Ignore for now.")
 	def testConnectAndDiscover(self):
 		self.coapClient.sendDiscoveryRequest(timeout = 10)
@@ -55,14 +55,14 @@ class CoapClientConnectorTest(unittest.TestCase):
 	get test
 	------------------------------------------------------------------
 	"""
-	#@unittest.skip("Ignore for now.")
+	@unittest.skip("Ignore for now.")
 	def testConnectAndGetCon(self):
 		# TODO: implement this
 		self.coapClient.sendGetRequest(resource = ResourceNameEnum.CDA_MGMT_STATUS_MSG_RESOURCE, enableCON = True, timeout = 5)
 		sleep(5)
 		logging.info("--------------------------->Test testConnectAndGetCon")
 	
-	#@unittest.skip("Ignore for now.")
+	@unittest.skip("Ignore for now.")
 	def testConnectAndGetNon(self):
 		# TODO: implement this
 		self.coapClient.sendGetRequest(resource = ResourceNameEnum.CDA_MGMT_STATUS_MSG_RESOURCE, enableCON = False, timeout = 5)
@@ -74,14 +74,14 @@ class CoapClientConnectorTest(unittest.TestCase):
 	delete test
 	------------------------------------------------------------------
 	"""
-	#@unittest.skip("Ignore for now.")
+	@unittest.skip("Ignore for now.")
 	def testConnectAndDeleteCon(self):
 		self.coapClient.sendDeleteRequest(resource = ResourceNameEnum.CDA_MGMT_STATUS_MSG_RESOURCE, enableCON = True, timeout = 5)
 		
 		sleep(5)
 		logging.info("--------------------------->Test testConnectAndDeleteCon")
 
-	#@unittest.skip("Ignore for now.")
+	@unittest.skip("Ignore for now.")
 	def testConnectAndDeleteNon(self):
 		self.coapClient.sendDeleteRequest(resource = ResourceNameEnum.CDA_MGMT_STATUS_MSG_RESOURCE, enableCON = False, timeout = 5)
 		
@@ -94,20 +94,22 @@ class CoapClientConnectorTest(unittest.TestCase):
 	put test
 	------------------------------------------------------------------
 	"""
-	#@unittest.skip("Ignore for now.")
+	##@unittest.skip("Ignore for now.")
 	def testConnectAndPutCon(self):
 		msg = "This is a test."
 		self.coapClient.sendPutRequest(resource = ResourceNameEnum.CDA_MGMT_STATUS_MSG_RESOURCE, payload = msg, enableCON = True, timeout = 5)
 		
 		sleep(5)
+		self.coapClient.sendGetRequest(resource = ResourceNameEnum.CDA_MGMT_STATUS_MSG_RESOURCE, enableCON = True, timeout = 5)
 		logging.info("--------------------------->Test testConnectAndPutCon")
 	
-	#@unittest.skip("Ignore for now.")
+	@unittest.skip("Ignore for now.")
 	def testConnectAndPutNon(self):
 		msg = "This is a test."
 		self.coapClient.sendPutRequest(resource = ResourceNameEnum.CDA_MGMT_STATUS_MSG_RESOURCE, payload = msg, enableCON = False, timeout = 5)
 		
 		sleep(5)
+		self.coapClient.sendGetRequest(resource = ResourceNameEnum.CDA_MGMT_STATUS_MSG_RESOURCE, enableCON = False, timeout = 5)
 		logging.info("--------------------------->Test testConnectAndPutNon")
 
 	"""
@@ -115,7 +117,7 @@ class CoapClientConnectorTest(unittest.TestCase):
 	post test
 	------------------------------------------------------------------
 	"""
-	#@unittest.skip("Ignore for now.")
+	@unittest.skip("Ignore for now.")
 	def testConnectAndPostCon(self):
 		msg = "This is a test."
 		self.coapClient.sendPostRequest(resource = ResourceNameEnum.CDA_MGMT_STATUS_MSG_RESOURCE, payload = msg, enableCON = True, timeout = 5)
@@ -123,10 +125,12 @@ class CoapClientConnectorTest(unittest.TestCase):
 		sleep(5)
 		logging.info("--------------------------->Test testConnectAndPostCon")
 
-	#@unittest.skip("Ignore for now.")
+	@unittest.skip("Ignore for now.")
 	def testConnectAndPostNon(self):
 		msg = "This is a test."
 		self.coapClient.sendPostRequest(resource = ResourceNameEnum.CDA_MGMT_STATUS_MSG_RESOURCE, payload = msg, enableCON = False, timeout = 5)
+		sleep(5)
+		self.coapClient.sendGetRequest(resource = ResourceNameEnum.CDA_MGMT_STATUS_MSG_RESOURCE, enableCON = False, timeout = 5)
 		
 		sleep(5)
 		logging.info("--------------------------->Test testConnectAndPostNon")
