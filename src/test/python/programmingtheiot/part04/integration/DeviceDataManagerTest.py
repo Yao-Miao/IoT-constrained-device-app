@@ -14,7 +14,7 @@ from time import sleep
 
 from programmingtheiot.cda.app.DeviceDataManager import DeviceDataManager
 
-class DeviceDataManagerWithCommsTest(unittest.TestCase):
+class DeviceDataManagerTest(unittest.TestCase):
     """
     This test case class contains very basic integration tests for
     DeviceDataManager. It should not be considered complete,

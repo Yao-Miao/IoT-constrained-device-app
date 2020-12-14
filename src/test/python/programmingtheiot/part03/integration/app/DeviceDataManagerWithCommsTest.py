@@ -68,7 +68,7 @@ class DeviceDataManagerWithCommsTest(unittest.TestCase):
 		ddMgr = DeviceDataManager(enableMqtt = True, enableCoap = True)
 		ddMgr.startManager()
 		
-		sleep(60000)
+		sleep(600000)
 		
 		ddMgr.stopManager()
 	
