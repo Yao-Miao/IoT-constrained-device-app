@@ -96,7 +96,7 @@ class MqttClientConnector(IPubSubClient):
 		return True
 	
 	def onActuatorCommandMessage(self, client, userdata, msg):
-		logging.info('[MQTT_CALLBACK] Actuator command message received. Topic: %s.', msg.topic)
+		##logging.info('[MQTT_CALLBACK] Actuator command message received. Topic: %s.', msg.topic)
 		jsonData = str(msg.payload, encoding = "utf-8")
 		if self.dataMsgListener:
 			try:
@@ -110,7 +110,7 @@ class MqttClientConnector(IPubSubClient):
 		callback method to handle connection notification events
 		"""
 		
-		#logging.info('[Callback] Connected to MQTT broker. Result code: ' + str(rc))
+		##logging.info('[Callback] Connected to MQTT broker. Result code: ' + str(rc))
 
 		# NOTE: Use the QoS of your choice - '1' is only an example
 		self.mc.subscribe(topic = ResourceNameEnum.CDA_ACTUATOR_CMD_RESOURCE.value, qos = 1)
@@ -122,21 +122,21 @@ class MqttClientConnector(IPubSubClient):
 		callback method to handle connection notification events
 		"""
 		
-		logging.info('[MQTT_CALLBACK] Disconnected from MQTT broker. Result code:' + str(rc))
+		##logging.info('[MQTT_CALLBACK] Disconnected from MQTT broker. Result code:' + str(rc))
 		
 	def onMessage(self, client, userdata, msg):
 		"""
 		callback method - this will be called whenever a message is received on the topic for which your client has subscribed
 		"""
 		
-		logging.info('[MQTT_CALLBACK] onMessage is being called client:' + str(client._client_id) + '   msg:' + str(msg.payload))
+		##logging.info('[MQTT_CALLBACK] onMessage is being called client:' + str(client._client_id) + '   msg:' + str(msg.payload))
 			
 	def onPublish(self, client, userdata, mid):
 		"""
 		callback method to handle message publish notification events
 		"""
 		
-		#logging.info('[Callback] onPublish is being called client:' + str(client._client_id) + '   mid:' + str(mid))
+		##logging.info('[Callback] onPublish is being called client:' + str(client._client_id) + '   mid:' + str(mid))
 		
 	
 	def onSubscribe(self, client, userdata, mid, granted_qos):
@@ -144,7 +144,8 @@ class MqttClientConnector(IPubSubClient):
 		callback method to handle topic subscription notification events
 		"""
 		
-		#logging.info('[Callback] Subscribed client:' + str(client._client_id) + '   MID:' + str(mid))
+		
+		##logging.info('[Callback] Subscribed client:' + str(client._client_id) + '   MID:' + str(mid))
 	
 	
 	

@@ -18,6 +18,8 @@ from coapthon.messages.request import Request
 from coapthon.utils import parse_uri
 from coapthon.utils import generate_random_token
 
+from programmingtheiot.data.DataUtil import DataUtil
+
 
 import programmingtheiot.common.ConfigConst as ConfigConst
 
@@ -216,9 +218,15 @@ class CoapClientConnector(IRequestResponseClient):
 			#
 	
 			# TODO: get the URI and convert to ResourceNameEnum
+			
 			resource = ResourceNameEnum.CDA_ACTUATOR_CMD_RESOURCE
 			msg = str(response.payload);
-			
+			if response.payload:
+				ad = DataUtil.jsonToActuatorData(self, msg)
+				if ad.getActuatorType() == 4 :
+					resource = ResourceNameEnum.CDA_ACTUATOR_CMD_RESOURCE
+				else:
+					resource = ResourceNameEnum.CDA_CLOUD_ACTUATOR_CMD_RESOURCE
 			if self.dataMsgListener and response.payload:
 				self.dataMsgListener.handleIncomingMessage(resource, msg)
 

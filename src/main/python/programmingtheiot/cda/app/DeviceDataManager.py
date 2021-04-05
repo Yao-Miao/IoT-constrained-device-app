@@ -191,7 +191,6 @@ class DeviceDataManager(IDataMessageListener):
 		
 		logging.info("----->>>The DeviceDataManager stopped")
 		
-		
 
 	def _handleIncomingDataAnalysis(self, msg: str):
 		"""
@@ -214,6 +213,9 @@ class DeviceDataManager(IDataMessageListener):
 		2) Act on data: If # 1 is true, determine what - if any - action is required, and execute.
 		"""
 		logging.info("[CDA_CALLBACK]----->>>The _handleSensorDataAnalysis method is being called")
+		
+		"""
+		"""
 		if self.enableHandleTempChangeOnDevice and data.getSensorType() == SensorData.TEMP_SENSOR_TYPE:
 
 			ad = ActuatorData(actuatorType = ActuatorData.HVAC_ACTUATOR_TYPE)
@@ -225,7 +227,8 @@ class DeviceDataManager(IDataMessageListener):
 			
 			self.actuatorAdapterManager.sendActuatorCommand(ad)
 			
-		
+		"""
+		"""
 		if self.enableHandleSoilHumidityChangeOnDevice and data.getSensorType() == SensorData.SOIL_HUMIDITY_SENSOR_TYPE:
 			
 			ad = ActuatorData(actuatorType = ActuatorData.SPRINKLER_ACTUATOR_TYPE)
@@ -233,16 +236,14 @@ class DeviceDataManager(IDataMessageListener):
 			if value >= self.triggerWaterDeviceHumiCeiling: 
 				ad.setCommand(ActuatorData.COMMAND_OFF)
 				self.actuatorAdapterManager.sendActuatorCommand(ad)
-			elif value<= self.triggerWaterDeviceHumiFloor:
+			elif value <= self.triggerWaterDeviceHumiFloor:
 				ad.setCommand(ActuatorData.COMMAND_ON)
 				self.actuatorAdapterManager.sendActuatorCommand(ad)
 				self.coapClient.sendGetRequest(ResourceNameEnum.CDA_ACTUATOR_CMD_RESOURCE, False, 5)
-			else :
-				self.coapClient.sendGetRequest(ResourceNameEnum.CDA_ACTUATOR_CMD_RESOURCE, False, 5)
-			
-			
-			
-			
+			else:
+				self.coapClient.sendGetRequest(ResourceNameEnum.CDA_CLOUD_ACTUATOR_CMD_RESOURCE, False, 5)
+				
+		
 		
 			
 		

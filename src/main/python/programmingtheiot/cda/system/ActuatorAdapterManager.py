@@ -62,6 +62,9 @@ class ActuatorAdapterManager(object):
 			sprCtrlClazz = getattr(sprCtrlModule, 'SprinklerCtrlEmulatorTask')
 			self.sprCtrlEmulator = sprCtrlClazz()
 			
+			sprMasterModule = __import__('programmingtheiot.cda.emulated.SprinklerMasterEmulatorTask', fromlist = ['SprinklerMasterEmulatorTask'])
+			sprMasterClazz = getattr(sprMasterModule, 'SprinklerMasterEmulatorTask')
+			self.sprMasterEmulator = sprMasterClazz()
 			
 			
 
@@ -99,6 +102,9 @@ class ActuatorAdapterManager(object):
 				if (data.getActuatorType() == ActuatorData.SPRINKLER_CTRL_ACTUATOR_TYPE):
 					if ~data.isResponseFlagEnabled(): 
 						self.sprCtrlEmulator._handleActuation(data.getCommand(), data.getValue(), data.getStateData())
+				if (data.getActuatorType() == ActuatorData.SPRINKLER_MASTER_ACTUATOR_TYPE):
+					if ~data.isResponseFlagEnabled(): 
+						self.sprMasterEmulator._handleActuation(data.getCommand(), data.getValue(), data.getStateData())
 			else:
 				if (data.getActuatorType() == ActuatorData.HUMIDIFIER_ACTUATOR_TYPE):
 					if ~data.isResponseFlagEnabled(): 

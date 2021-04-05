@@ -33,7 +33,7 @@ class SensorAdapterManager(object):
 	
 	"""
 
-	def __init__(self, useEmulator: bool = False, pollRate: int = 5, allowConfigOverride: bool = True):
+	def __init__(self, useEmulator: bool = False, pollRate: int = 15, allowConfigOverride: bool = True):
 		"""
 		Initialization of class.
 		Create an instance of SensorAdapterManager

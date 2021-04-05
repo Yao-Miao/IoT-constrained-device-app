@@ -9,6 +9,8 @@
 
 import json
 
+import logging
+
 from json import JSONEncoder
 
 from programmingtheiot.data.ActuatorData import ActuatorData
@@ -36,6 +38,7 @@ class DataUtil():
 		"""
 		
 		jsonData = json.dumps(actuatorData, indent = 4, cls = JsonDataEncoder, ensure_ascii = True)
+		logging.info('Convert ActuatorData to JSON: ' + jsonData);
 		return jsonData
 	
 	def sensorDataToJson(self, sensorData):
@@ -46,6 +49,7 @@ class DataUtil():
 		"""
 		
 		jsonData = json.dumps(sensorData, indent = 4, cls = JsonDataEncoder, ensure_ascii = True)
+		logging.info('Convert SensorData to JSON: ' + jsonData);
 		return jsonData
 
 	def systemPerformanceDataToJson(self, sysPerfData):
@@ -55,6 +59,7 @@ class DataUtil():
 		@return str
 		"""
 		jsonData = json.dumps(sysPerfData, indent = 4, cls = JsonDataEncoder, ensure_ascii = True)
+		logging.info('Convert SystemPerformanceData to JSON: ' + jsonData);
 		return jsonData
 	
 	def jsonToActuatorData(self, jsonData):
@@ -65,6 +70,7 @@ class DataUtil():
 		"""
 		
 		jsonData = jsonData.replace("\'", "\"").replace('False','false').replace('True', 'true')
+		logging.info('Convert JSON to an ActuatorData instance: ' + jsonData);
 		## Load the dictionary data for the JSON string
 		adDict = json.loads(jsonData)
 		
@@ -86,6 +92,7 @@ class DataUtil():
 		"""
 		
 		jsonData = jsonData.replace("\'", "\"").replace('False','false').replace('True', 'true')
+		logging.info('Convert JSON to an SensorData instance: ' + jsonData);
 		## Load the dictionary data for the JSON string
 		sdDict = json.loads(jsonData)
 		
@@ -107,6 +114,7 @@ class DataUtil():
 		"""
 		
 		jsonData = jsonData.replace("\'", "\"").replace('False','false').replace('True', 'true')
+		logging.info('Convert JSON to an SystemPerformanceData instance: ' + jsonData);
 		## Load the dictionary data for the JSON string
 		sysdDict = json.loads(jsonData)
 		

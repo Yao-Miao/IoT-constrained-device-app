@@ -55,7 +55,7 @@ triggerHvacTempFloor = 16
 triggerHvacTempCeiling = 23
 
 enableHandleSoilHumidityChangeOnDevice = True
-triggerWaterDeviceHumiFloor = 35
+triggerWaterDeviceHumiFloor = 30
 triggerWaterDeviceHumiCeiling = 50
 
 #

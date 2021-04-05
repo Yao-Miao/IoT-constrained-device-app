@@ -20,7 +20,7 @@ from programmingtheiot.cda.sim.BaseActuatorSimTask import BaseActuatorSimTask
 from pisense import SenseHAT
 from pisense import *
 
-class SprinklerCtrlEmulatorTask(BaseActuatorSimTask):
+class SprinklerMasterEmulatorTask(BaseActuatorSimTask):
     """
     Shell representation of class for student implementation.
     
@@ -31,7 +31,7 @@ class SprinklerCtrlEmulatorTask(BaseActuatorSimTask):
         Initialization of class.
         Create an instance of HvacEmulatorTask
         """
-        super(SprinklerCtrlEmulatorTask, self).__init__(actuatorType = ActuatorData.SPRINKLER_CTRL_ACTUATOR_TYPE, simpleName = "SCTRL")
+        super(SprinklerMasterEmulatorTask, self).__init__(actuatorType = ActuatorData.SPRINKLER_MASTER_ACTUATOR_TYPE, simpleName = "SPRI_MASTER")
         # Create an instance of SenseHAT and set the emulate flag to True if running the emulator, or False if using real hardware
         # This can be read from ConfigUtil using the ConfigConst.CONSTRAINED_DEVICE section and the ConfigConst.ENABLE_SENSE_HAT_KEY
         # If the ConfigConst.ENABLE_SENSE_HAT_KEY is False, set the emulate flag to True, otherwise set to False
@@ -51,14 +51,14 @@ class SprinklerCtrlEmulatorTask(BaseActuatorSimTask):
         if cmd == ActuatorData.COMMAND_ON:
             if self.sh.screen:
                 # create a message with the value and an 'ON' message, then scroll it across the LED display
-                self.sh.screen.scroll_text('Level' + str(val))
+                self.sh.screen.scroll_text('M_ON!')
             else:
                 logging.warning("No SenseHAT LED screen instance to update.")
                 return -1
         else:
             if self.sh.screen:
                 # create a message with an 'OFF' message, then scroll it across the LED display
-                self.sh.screen.scroll_text('Level' + str(val))
+                self.sh.screen.scroll_text('M_OFF!')
             else:
                 logging.warning("No SenseHAT LED screen instance to clear / close.")
                 return -1
